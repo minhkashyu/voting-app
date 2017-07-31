@@ -1,0 +1,28 @@
+.footer {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+}
+
+.footer-container {
+    background-color: $dark-ocean-blue;
+    color: white;
+    p {
+        margin-bottom: 0;
+    }
+
+    a {
+        color: $light-ocean-blue;
+        text-decoration: none;
+        padding: 0;
+        @include transition(color .25s ease-in-out);
+
+        &:focus,
+        &:hover {
+            color: white;
+            text-decoration: none;
+        }
+    }
+}

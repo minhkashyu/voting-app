@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en');
+
+/*
+ * Colors
+ * ========================================================================== */
+
+$black: #353535;
+$dark-black: #151515;
+$light-black: #656565;
+$grey: #CCCCCC;
+$grey-heading: rgba(18, 93, 132, 0.2);
+$silver: #C0C0C0;
+$dark-ocean-blue: #125D84;
+$mid-ocean-blue: #15A9C7;
+$light-ocean-blue: #54DBDF;
+$background-blue: #E8F7FF;
+
+/*
+ * Typography
+ * ========================================================================== */
+
+$font-family-base:      'Roboto', 'Helvetica', sans-serif;
+
+/*
+ * Navbar
+ * ========================================================================== */
+
+$navbar-inner-margin: 4px;
+$navbar-inner-height: 60px;
+$navbar-height: 60px + 2 * $navbar-inner-margin;
+
+/*
+ * Mixins
+ * ========================================================================== */
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius; /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+    -moz-border-radius: $radius; /* Firefox 1-3.6 */
+    -ms-border-radius: $radius;
+    border-radius: $radius; /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
+}
+
+@mixin box-shadow($params) {
+    -webkit-box-shadow: $params;
+    -moz-box-shadow: $params;
+    box-shadow: $params;
+}
+
+@mixin opacity($value) {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$value})"; /* for IE8 */
+    filter: alpha(opacity=$value); /* for IE5-7 */
+    opacity: $value/100; /* for all other browsers */
+}
+
+@mixin border-image($params) {
+    -webkit-border-image: $params; /* WebKit */
+    -moz-border-image: $params; /* Mozilla */
+    -o-border-image: $params; /* Opera */
+    border-image: $params; /* Generic */
+}
+
+@mixin background-size($value) {
+    -webkit-background-size: $value; /* WebKit */
+    -moz-background-size: $value; /* Mozilla */
+    -o-background-size: $value; /* Opera */
+    background-size: $value; /* Generic */
+}
+
+@mixin transform-scale($value) {
+    -ms-transform: scale($value); /* IE 9 */
+    -webkit-transform: scale($value); /* Chrome, Safari, Opera */
+    -moz-transform: scale($value); /* Mozilla */
+    transform: scale($value); /* Generic */
+}
+
+@mixin transform-rotate($value) {
+    -ms-transform: rotate($value); /* IE 9 */
+    -webkit-transform: rotate($value); /* Chrome, Safari, Opera */
+    -moz-transform: rotate($value); /* Mozilla */
+    transform: rotate($value); /* Generic */
+}
+
+@mixin transition($value) {
+    -webkit-transition: $value; /* WebKit */
+    -moz-transition: $value; /* Mozilla */
+    -o-transition: $value; /* Opera */
+    transition: $value; /* Generic */
+}
+
+@mixin background-gradient($directionFrom, $directionTo, $color-stop1, $color-stop2) {
+    background: $color-stop1; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient($directionFrom, $color-stop1, $color-stop2); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($directionTo, $color-stop1, $color-stop2); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($directionTo, $color-stop1, $color-stop2); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to $directionTo, $color-stop1, $color-stop2); /* Standard syntax */
+}

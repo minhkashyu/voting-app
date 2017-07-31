@@ -1,0 +1,138 @@
+$navbar-toggle-margin: ($navbar-height - 7 * $navbar-inner-margin) / 2;
+
+@mixin nav-link() {
+    line-height: $navbar-inner-height;
+    border: 0 none;
+    @include border-radius(0);
+    padding: 0 15px;
+    margin: $navbar-inner-margin 0;
+}
+
+%li {
+    a,
+    a:focus,
+    a:hover,
+    a.active,
+    button {
+        background: transparent;
+        @include nav-link;
+    }
+
+    a,
+    button {
+        color: $light-black;
+        font-weight: 200;
+        @include transition('font-weight, text-transform .25s ease-in-out');
+
+        &:focus,
+        &:hover,
+        &.active {
+            color: $dark-ocean-blue;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        &.active {
+            border-top: $navbar-inner-margin solid $dark-ocean-blue;
+            border-bottom: $navbar-inner-margin solid $dark-ocean-blue;
+            margin: 0;
+        }
+    }
+}
+
+.navbar-changed {
+    min-height: $navbar-height;
+    background-color: white;
+    border: 0 none;
+    @include border-radius(0);
+    margin: 0;
+    padding: 0;
+
+    /* navbar-toggle */
+    .navbar-toggle,
+    .navbar-toggle:focus,
+    .navbar-toggle:hover
+    {
+        background: transparent !important;
+        border: 0 none;
+        @include border-radius(0);
+        margin-top: $navbar-toggle-margin;
+        margin-bottom: $navbar-toggle-margin;
+        padding: 0 10px;
+    }
+
+    .navbar-toggle {
+        .icon-bar {
+            @include border-radius(0);
+            height: $navbar-inner-margin;
+            width: $navbar-inner-height / 2;
+            background-color: $light-black;
+            @include transition(all .25s);
+
+            & + .icon-bar {
+                margin-top: 2 * $navbar-inner-margin;
+            }
+        }
+
+        &:focus > .icon-bar,
+        &:hover > .icon-bar {
+            background-color: $dark-ocean-blue;
+            @include transform-rotate(360deg);
+        }
+    }
+
+    .navbar-brand {
+        height: $navbar-inner-height;
+        margin-top: $navbar-inner-margin;
+        margin-bottom: $navbar-inner-margin;
+        padding: 0 0 0 15px;
+        @include transition(all .25s ease-in-out);
+
+        &:hover {
+            @include transform-scale(1.1);
+        }
+
+        .App-logo {
+            animation: App-logo-spin infinite 20s linear;
+            height: 60px;
+        }
+
+        @keyframes App-logo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    }
+
+    /* remove collapse top line */
+    .navbar-collapse,
+    .navbar-form {
+        border: 0 none;
+    }
+
+    .navbar-collapse {
+        @include box-shadow(none);
+    }
+
+    .navbar-nav {
+        li {
+            @extend %li;
+        }
+
+        li.open {
+            .dropdown-menu {
+                border: 1px solid $dark-ocean-blue;
+                @include border-radius(0);
+                @include box-shadow(none);
+                margin: 0;
+
+                li {
+                    @extend %li;
+                }
+            }
+        }
+    }
+}
+
+.navbar-clear-margin {
+    margin-bottom: 0;
+}

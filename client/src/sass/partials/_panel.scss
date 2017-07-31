@@ -1,0 +1,22 @@
+.panel-changed {
+    border-color: $light-ocean-blue;
+    background-color: white;
+    text-align: center;
+
+    .panel-heading {
+        color: white;
+        background-color: $dark-ocean-blue;
+        border-color: $mid-ocean-blue;
+        
+        a {
+            color: white;
+            text-decoration: underline;
+            
+            &:focus,
+            &:hover {
+                color: white;
+                font-weight: bold;
+            }
+        }
+    }
+}

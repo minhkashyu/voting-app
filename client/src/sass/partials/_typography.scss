@@ -1,0 +1,15 @@
+.heading1,
+.heading2 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.heading1 {
+    color: $dark-ocean-blue;
+}
+
+.heading2 {
+    color: $dark-black;
+    font-style: italic;
+}
