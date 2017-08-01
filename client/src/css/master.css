@@ -212,6 +212,10 @@ body {
     -moz-box-shadow: none;
     box-shadow: none;
     margin: 0; }
+    .navbar-changed .navbar-nav li.open .dropdown-menu li a,
+    .navbar-changed .navbar-nav li.open .dropdown-menu li a:focus,
+    .navbar-changed .navbar-nav li.open .dropdown-menu li a:hover {
+      padding: 0 15px 0 30px; }
 
 .navbar-clear-margin {
   margin-bottom: 0; }

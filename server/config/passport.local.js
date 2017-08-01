@@ -1,5 +1,5 @@
 import { Strategy as LocalStrategy } from 'passport-local';
-import User from '../models/user';
+import User from './../models/user';
 
 export const register = new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email

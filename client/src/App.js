@@ -25,8 +25,7 @@ import ForgotPassword from './components/auth/forgotPassword';
 import ResetPassword from './components/auth/resetPassword';
 
 // Import poll pages
-import Polls from './components/poll/polls.jsx';
-import MyPolls from './components/poll/myPolls.jsx'
+import MyPolls from './components/poll/myPolls.jsx';
 import NewPoll from './components/poll/newPoll.jsx';
 import ViewPoll from './components/poll/viewPoll.jsx';
 
@@ -53,7 +52,6 @@ class App extends Component {
                                 <Route path="/forgot-password" component={ForgotPassword} />
                                 <Route path="/reset-password/:resetToken" component={ResetPassword} />
 
-                                <Route path="/polls" component={Polls} />
                                 <Route path="/my-polls" component={RequireAuth(MyPolls)} />
                                 <Route path="/poll/new" component={RequireAuth(NewPoll)} />
                                 <Route path="/poll/:pollId" component={ViewPoll} />

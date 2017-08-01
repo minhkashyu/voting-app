@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { authenticatedTest } from '../../actions/auth';
 
 export default function (ComposedComponent) {
     class Authentication extends Component {
-
-        constructor(props) {
-            super(props);
-            this.props.authenticatedTest();
-        }
 
         static propTypes = {
             history: PropTypes.shape({
@@ -40,5 +34,5 @@ export default function (ComposedComponent) {
         };
     }
 
-    return connect(mapStateToProps, { authenticatedTest })(Authentication);
+    return connect(mapStateToProps)(Authentication);
 }

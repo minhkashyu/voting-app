@@ -1,4 +1,4 @@
-import Poll from '../models/poll';
+import Poll from './../models/poll';
 
 export function getPolls(req, res, next) {
     Poll.find({})
@@ -43,21 +43,26 @@ export function getSinglePoll(req, res, next) {
         });
 }
 
-export function newPoll(req, res, next) {
-    if (!req.params.title) {
+export function addPoll(req, res, next) {
+    if (!req.body.title) {
         res.status(422).send({ error: 'Please enter a title.' });
         return next();
     }
 
-    if (!req.params.options || req.params.options.length < 2) {
+    if (!req.body.options || req.body.options.length < 2) {
         res.status(422).send({ error: 'Please enter 2 or more options.' });
         return next();
     }
 
+    let arrOptions = [];
+    req.body.options.map((val) => {
+        arrOptions.push({ name: val.toString(), vote: 0});
+    });
+
     const poll = new Poll({
-        title: req.params.title,
-        author: req.user._id,
-        options: req.params.options
+        title: req.body.title,
+        author: req.params.userId,
+        options: arrOptions
     });
 
     poll.save((err, newPoll) => {
@@ -66,6 +71,6 @@ export function newPoll(req, res, next) {
             return next(err);
         }
 
-        return res.status(200).json({ pollId: newPoll._id });
+        return res.status(200).json({ message: `New poll (id:${newPoll.id}) has been created.` });
     });
 }

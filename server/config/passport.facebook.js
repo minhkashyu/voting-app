@@ -1,5 +1,5 @@
 import { Strategy as FacebookStrategy } from 'passport-facebook';
-import User from '../models/user';
+import User from './../models/user';
 import configAuth from './auth';
 
 const facebook = new FacebookStrategy({

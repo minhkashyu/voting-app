@@ -1,16 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { authenticatedTest, loginUser, loginFacebook, loginGoogle } from '../../actions/auth';
+import { loginUser, loginFacebook, loginGoogle } from './../../actions/auth';
 import LoginForm from './loginForm.jsx';
 import LoginMedia from './loginMedia.jsx';
 
 class Login extends Component {
 
-    constructor(props) {
-        super(props);
-        this.props.authenticatedTest();
+    static propTypes = {
+        history: PropTypes.shape({
+            push: PropTypes.func.isRequired
+        }).isRequired
+    };
+
+    componentWillMount() {
+        if (this.props.authenticated) {
+            this.props.history.push('/my-polls');
+        }
+    }
+
+    componentWillUpdate(nextProps) {
+        if (nextProps.authenticated) {
+            this.props.history.push('/my-polls');
+        }
     }
 
     renderAlert() {
@@ -44,4 +57,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default withRouter(connect(mapStateToProps, { authenticatedTest, loginUser, loginFacebook, loginGoogle })(Login));
+export default connect(mapStateToProps, { loginUser, loginFacebook, loginGoogle })(Login);

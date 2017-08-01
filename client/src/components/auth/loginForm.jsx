@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { required, maxLength100, minLength6, email, renderField } from './../template/formValidation';
+import { required, maxLength100, minLength6, email, renderField } from './../template/formValidation.jsx';
 
 const form = reduxForm({
     form: 'login'

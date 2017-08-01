@@ -1,5 +1,5 @@
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
-import User from '../models/user';
+import User from './../models/user';
 import configAuth from './auth';
 
 const google = new GoogleStrategy({

@@ -29,13 +29,15 @@ export function postData(action, errorType, isAuthReq, url, dispatch, cookies, d
 
     axios.post(requestUrl, data, headers)
         .then((response) => {
-            dispatch({
-                type: action,
-                payload: response.data
-            });
+            //dispatch({
+            //    type: action,
+            //    payload: response.data
+            //});
+            console.log(response);
         })
         .catch((error) => {
-            errorHandler(dispatch, error, errorType);
+            //errorHandler(dispatch, error, errorType);
+            console.log(error);
         });
 }
 

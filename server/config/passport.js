@@ -1,4 +1,4 @@
-import User from '../models/user';
+import User from './../models/user';
 import passport from 'passport';
 import passportJWT from './passport.jwt';
 import { login, register } from './passport.local';

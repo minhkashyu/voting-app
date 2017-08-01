@@ -12,6 +12,8 @@ import {
 const INITIAL_STATE = {
     polls: [],
     poll: '',
+    options: [],
+    moreOptions: [1, 2],
     message: '',
     error: ''
 };
@@ -20,11 +22,11 @@ const pollReducer = (state = INITIAL_STATE, action) => {
     // eslint-disable-next-line
     switch (action.type) {
         case FETCH_POLLS:
-            return {...state, polls: action.payload.polls, error: '', message: ''};
+            return {...state, polls: action.payload.polls };
         case FETCH_MY_POLLS:
-            return {...state, polls: action.payload.polls, error: '', message: ''};
+            return {...state, polls: action.payload.polls };
         case FETCH_SINGLE_POLL:
-            return {...state, poll: action.payload.poll, error: '', message: ''};
+            return {...state, poll: action.payload.poll };
         case SUBMIT_VOTE:
             return {...state, message: action.payload.message};
         case ADD_POLL:

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import User from '../models/user';
-import config from '../config/main';
+import User from './../models/user';
+import config from './../config/main';
 
 import { setLocalUserInfo, setFacebookInfo, setTwitterInfo, setGoogleInfo, getRole } from '../helpers';
 

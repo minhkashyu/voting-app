@@ -127,6 +127,12 @@ $navbar-toggle-margin: ($navbar-height - 7 * $navbar-inner-margin) / 2;
 
                 li {
                     @extend %li;
+
+                    a,
+                    a:focus,
+                    a:hover {
+                        padding: 0 15px 0 30px;
+                    }
                 }
             }
         }

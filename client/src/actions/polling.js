@@ -41,22 +41,25 @@ export function fetchSinglePoll(pollId) {
     };
 }
 
-export function submitVote(pollId, optionId) {
-    const url = `/polls/${pollId}/options/${optionId}/vote`;
-    return (dispatch, getState, cookies) => postData(SUBMIT_VOTE, POLL_ERROR, true, url, dispatch, cookies);
-}
-
 export function addPoll(data) {
-    const url = `/polls`;
-    return (dispatch, getState, cookies) => postData(ADD_POLL, POLL_ERROR, true, url, dispatch, cookies);
+    return (dispatch, getState, cookies) => {
+        let userId = cookies.get('user').id;
+        let url = `/users/${userId}/polls`;
+        postData(ADD_POLL, POLL_ERROR, true, url, dispatch, cookies, data);
+    };
 }
 
 export function deletePoll(id) {
-    const url = `/polls/${id}`;
+    let url = `/polls/${id}`;
     return (dispatch, getState, cookies) => deleteData(DELETE_POLL, POLL_ERROR, true, url, dispatch, cookies);
+}
+
+export function submitVote(pollId, optionId) {
+    let url = `/polls/${pollId}/options/${optionId}/vote`;
+    return (dispatch, getState, cookies) => postData(SUBMIT_VOTE, POLL_ERROR, true, url, dispatch, cookies);
 }
 
 export function addOption(data) {
     const url = `/options`;
-    return (dispatch, getState, cookies) => postData(ADD_OPTION, POLL_ERROR, true, url, dispatch, cookies);
+    return (dispatch, getState, cookies) => postData(ADD_OPTION, POLL_ERROR, true, url, dispatch, cookies, data);
 }

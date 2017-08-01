@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { fetchMyPolls } from './../../actions/polling';
-import PollList from './../poll/poll-list.jsx';
+import PollList from './../poll/pollList.jsx';
 
 class MyPolls extends React.Component {
     renderPolls() {

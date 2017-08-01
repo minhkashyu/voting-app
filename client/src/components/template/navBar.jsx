@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 import PropTypes from 'prop-types';
 
+import { authenticatedTest } from './../../actions/auth';
 import CustomLink from './customLink.jsx';
 import logo from './../../logo.svg';
 
@@ -50,6 +51,11 @@ const unauthenticatedItems = [
 ];
 
 class NavBar extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.props.authenticatedTest();
+    }
 
     static propTypes = {
         cookies: PropTypes.instanceOf(Cookies).isRequired
@@ -113,4 +119,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default withCookies(withRouter(connect(mapStateToProps)(NavBar)));
+export default withCookies(withRouter(connect(mapStateToProps, { authenticatedTest })(NavBar)));

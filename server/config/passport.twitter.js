@@ -1,5 +1,5 @@
 import { Strategy as TwitterStrategy } from 'passport-twitter';
-import User from '../models/user';
+import User from './../models/user';
 import configAuth from './auth';
 
 const twitter = new TwitterStrategy({

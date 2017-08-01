@@ -1,16 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { authenticatedTest } from '../../actions/auth';
 import { fetchPolls } from './../../actions/polling';
-import PollList from './../poll/poll-list.jsx';
+import PollList from './../poll/pollList.jsx';
 
 class Home extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.props.authenticatedTest();
-    }
 
     renderPolls() {
         if (this.props.polls && this.props.polls.length > 0) {
@@ -48,4 +42,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { authenticatedTest, fetchPolls })(Home);
+export default connect(mapStateToProps, { fetchPolls })(Home);

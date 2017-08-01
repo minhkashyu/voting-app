@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { resetPassword } from '../../actions/auth';
+import { resetPassword } from './../../actions/auth';
 import PropTypes from 'prop-types';
 
 const form = reduxForm({

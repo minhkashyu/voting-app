@@ -10,7 +10,8 @@ import {
     } from '../controllers/authentication';
 import {
     getPolls,
-    getMyPolls
+    getMyPolls,
+    addPoll
     } from '../controllers/polling';
 
 // Middleware to require login/auth
@@ -87,30 +88,29 @@ module.exports = (app) => {
     // Poll Routes
     //=========================
 
+    //fetchPolls()
     apiRoutes.get('/polls', getPolls);
-
+    //fetchMyPolls()
     apiRoutes.get('/users/:userId/polls', requireAuth, getMyPolls);
-
+    //fetchSinglePoll()
     apiRoutes.get('/polls/:pollId', (req, res) => {
         let pollId = req.params.pollId;
         res.send({ content: 'Get specific poll' });
     });
-
+    //addPoll(data)
+    apiRoutes.post('/users/:userId/polls', requireAuth, addPoll);
+    //deletePoll()
+    apiRoutes.delete(`/polls/:pollId`, (req, res) => {
+        let pollId = req.params.pollId;
+        res.send({ content: 'Delete a poll' });
+    });
+    //submitVote()
     apiRoutes.post('/polls/:pollId/options/:optionId/vote', (req, res) => {
         let pollId = req.params.pollId;
         let optionId = req.params.optionId;
         res.send({ content: 'Submit a vote' });
     });
-
-    apiRoutes.post('/polls', (req, res) => {
-        res.send({ content: 'Add a poll' });
-    });
-
-    apiRoutes.delete(`/polls/:pollId`, (req, res) => {
-        let pollId = req.params.pollId;
-        res.send({ content: 'Delete a poll' });
-    });
-
+    //addOption()
     apiRoutes.post('/options', (req, res) => {
         res.send({ content: 'Add an option' });
     });

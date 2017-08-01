@@ -17,6 +17,20 @@ import {
 // Authentication actions
 //= ===============================
 
+const loginSuccess = (dispatch, cookies, response) => {
+    cookies.set('token', response.data.token, { path: '/' });
+    cookies.set('user', response.data.user, { path: '/' });
+    dispatch({ type: AUTH_USER });
+};
+
+const loginError = (dispatch, error) => {
+    let errorMessage = error.response ? error.response.data : error;
+    dispatch({
+        type: AUTH_ERROR,
+        payload: errorMessage
+    })
+};
+
 export function authenticatedTest() {
     return function (dispatch, getState, cookies) {
         const token = cookies.get('token');
@@ -35,17 +49,10 @@ export function loginUser({ email, password }) {
     return function (dispatch, getState, cookies) {
         axios.post(`${API_URL}/auth/login`, { email, password })
             .then((response) => {
-                cookies.set('token', response.data.token, { path: '/' });
-                cookies.set('user', response.data.user, { path: '/' });
-                dispatch({ type: AUTH_USER });
-                //window.location.href = `${PUBLIC_URL}/my-polls`;
+                loginSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
-                let errorMessage = error.response ? error.response.data : error;
-                dispatch({
-                    type: AUTH_ERROR,
-                    payload: errorMessage
-                })
+                loginError(dispatch, error);
             });
     };
 }
@@ -54,17 +61,10 @@ export function registerUser({ firstName, lastName, email, password }) {
     return function (dispatch, getState, cookies) {
         axios.post(`${API_URL}/auth/register`, { firstName, lastName, email, password })
             .then((response) => {
-                cookies.set('token', response.data.token, { path: '/' });
-                cookies.set('user', response.data.user, { path: '/' });
-                dispatch({ type: AUTH_USER });
-                window.location.href = `${PUBLIC_URL}/my-polls`;
+                loginSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
-                let errorMessage = error.response ? error.response.data : error;
-                dispatch({
-                    type: AUTH_ERROR,
-                    payload: errorMessage
-                })
+                loginError(dispatch, error);
             });
     };
 }
@@ -73,17 +73,10 @@ export function loginFacebook() {
     return function (dispatch, getState, cookies) {
         axios.get(`${API_URL}/auth/facebook`)
             .then((response) => {
-                cookies.set('token', response.data.token, { path: '/' });
-                cookies.set('user', response.data.user, { path: '/' });
-                dispatch({ type: AUTH_USER });
-                window.location.href = `${PUBLIC_URL}/my-polls`;
+                loginSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
-                let errorMessage = error.response ? error.response.data : error;
-                dispatch({
-                    type: AUTH_ERROR,
-                    payload: errorMessage
-                })
+                loginError(dispatch, error);
             });
     };
 }
@@ -92,29 +85,22 @@ export function loginGoogle() {
     return function (dispatch, getState, cookies) {
         axios.get(`${API_URL}/auth/google`)
             .then((response) => {
-                cookies.set('token', response.data.token, { path: '/' });
-                cookies.set('user', response.data.user, { path: '/' });
-                dispatch({ type: AUTH_USER });
-                window.location.href = `${PUBLIC_URL}/my-polls`;
+                loginSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
-                let errorMessage = error.response ? error.response.data : error;
-                dispatch({
-                    type: AUTH_ERROR,
-                    payload: errorMessage
-                })
+                loginError(dispatch, error);
             });
     };
 }
 
 export function logoutUser(error) {
     return function (dispatch, getState, cookies) {
+        cookies.remove('token', { path: '/' });
+        cookies.remove('user', { path: '/' });
         dispatch({
             type: UNAUTH_USER,
             payload: error || ''
         });
-        cookies.remove('token', { path: '/' });
-        cookies.remove('user', { path: '/' });
         window.location.href = `${PUBLIC_URL}/login`;
     };
 }

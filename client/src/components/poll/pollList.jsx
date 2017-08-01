@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import PollItem from './poll-item.jsx';
+import PollItem from './pollItem.jsx';
 
 class PollList extends Component {
 
