@@ -10,9 +10,9 @@ const form = reduxForm({
 
 class RegisterForm extends Component {
     render() {
-        const { handleSubmit, pristine, reset, submitting } = this.props;
+        const { handleSubmit, pristine, reset, submitting, onSubmitRegister } = this.props;
         return (
-            <form onSubmit={handleSubmit(this.props.onSubmitRegister)}>
+            <form onSubmit={handleSubmit(onSubmitRegister)}>
                 <Field
                 name="firstName"
                 type="text"

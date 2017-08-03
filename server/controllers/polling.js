@@ -1,6 +1,6 @@
 import Poll from './../models/poll';
 
-export function getPolls(req, res, next) {
+export function fetchPolls(req, res, next) {
     Poll.find({})
         .select('id title')
         .sort('title')
@@ -14,10 +14,10 @@ export function getPolls(req, res, next) {
         });
 }
 
-export function getMyPolls(req, res, next) {
-    Poll.find({ author: req.params.userId })
+export function fetchMyPolls(req, res, next) {
+    Poll.find({ author: req.user.id })
         .select('id title')
-        .sort('createdAt')
+        .sort('title')
         .exec((err, polls) => {
             if (err) {
                 res.send({ error: err });
@@ -28,11 +28,9 @@ export function getMyPolls(req, res, next) {
         });
 }
 
-export function getSinglePoll(req, res, next) {
-    Poll.findOne({ id: req.params.pollId })
-        .select('createdAt title author options')
-        .sort('-createdAt')
-        .populate('options')
+export function fetchSinglePoll(req, res, next) {
+    Poll.findOne({ _id: req.params.pollId })
+        .select('id title author options')
         .exec((err, poll) => {
             if (err) {
                 res.send({ error: err });
@@ -61,7 +59,7 @@ export function addPoll(req, res, next) {
 
     const poll = new Poll({
         title: req.body.title,
-        author: req.params.userId,
+        author: req.user.id,
         options: arrOptions
     });
 
@@ -71,6 +69,9 @@ export function addPoll(req, res, next) {
             return next(err);
         }
 
-        return res.status(200).json({ message: `New poll (id:${newPoll.id}) has been created.` });
+        return res.status(200).json({
+            message: `New poll has been created.`,
+            poll: newPoll
+        });
     });
 }

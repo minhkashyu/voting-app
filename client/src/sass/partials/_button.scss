@@ -1,3 +1,15 @@
+a {
+    color: $dark-ocean-blue;
+    text-decoration: none;
+    @include transition(color .25s ease-in-out);
+
+    &:focus,
+    &:hover {
+        color: $mid-ocean-blue;
+        text-decoration: none;
+    }
+}
+
 .btn-mt {
     margin: 5px;
     background-color: $dark-ocean-blue;

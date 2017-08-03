@@ -9,7 +9,6 @@ import {
         UNAUTH_USER,
         FORGOT_PASSWORD_REQUEST,
         RESET_PASSWORD_REQUEST,
-        PROTECTED_TEST,
         AUTH_ERROR
     } from './types';
 
@@ -129,23 +128,6 @@ export function resetPassword(token, { password }) {
                     payload: response.data.message
                 });
                 window.location.href = `${PUBLIC_URL}/login`;
-            })
-            .catch((error) => {
-                errorHandler(dispatch, error, AUTH_ERROR);
-            });
-    };
-}
-
-export function protectedTest() {
-    return function (dispatch, getState, cookies) {
-        axios.get(`${API_URL}/protected`, {
-            headers: { Authorization: cookies.get('token') }
-        })
-            .then((response) => {
-                dispatch({
-                    type: PROTECTED_TEST,
-                    payload: response.data.content
-                });
             })
             .catch((error) => {
                 errorHandler(dispatch, error, AUTH_ERROR);

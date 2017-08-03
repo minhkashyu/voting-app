@@ -11,9 +11,10 @@ export const AUTH_USER = 'auth_user',
 //= =====================
 // Polling Actions
 //= =====================
-export const FETCH_POLLS = 'fetch_polls',
-    FETCH_MY_POLLS = 'fetch_my_polls',
-    FETCH_SINGLE_POLL = 'fetch_single_poll',
+export const FETCHING = 'fetching',
+    RECEIVE_POLLS = 'receive_polls',
+    RECEIVE_MY_POLLS = 'receive_my_polls',
+    RECEIVE_SINGLE_POLL= 'receive_single_poll',
     SUBMIT_VOTE = 'submit vote',
     ADD_POLL = 'add poll',
     DELETE_POLL = 'remove poll',

@@ -54,6 +54,7 @@ class NewPoll extends React.Component {
                     <button type="submit" disabled={submitting} className="btn btn-mt">Submit</button>
                     <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-mt">Clear Values</button>
                 </form>
+                <VoteForm options={poll['options']} onSubmitVote={submitVote} />
             </div>
         );
     }

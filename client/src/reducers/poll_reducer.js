@@ -1,7 +1,8 @@
 import {
-    FETCH_POLLS,
-    FETCH_MY_POLLS,
-    FETCH_SINGLE_POLL,
+    FETCHING,
+    RECEIVE_POLLS,
+    RECEIVE_MY_POLLS,
+    RECEIVE_SINGLE_POLL,
     SUBMIT_VOTE,
     ADD_POLL,
     DELETE_POLL,
@@ -11,9 +12,10 @@ import {
 
 const INITIAL_STATE = {
     polls: [],
-    poll: '',
+    poll: {},
     options: [],
     moreOptions: [1, 2],
+    isFetching: false,
     message: '',
     error: ''
 };
@@ -21,22 +23,24 @@ const INITIAL_STATE = {
 const pollReducer = (state = INITIAL_STATE, action) => {
     // eslint-disable-next-line
     switch (action.type) {
-        case FETCH_POLLS:
-            return {...state, polls: action.payload.polls };
-        case FETCH_MY_POLLS:
-            return {...state, polls: action.payload.polls };
-        case FETCH_SINGLE_POLL:
-            return {...state, poll: action.payload.poll };
+        case FETCHING:
+            return {...state, isFetching: true };
+        case RECEIVE_POLLS:
+            return {...state, polls: action.payload.polls, isFetching: false };
+        case RECEIVE_MY_POLLS:
+            return {...state, polls: action.payload.polls, isFetching: false };
+        case RECEIVE_SINGLE_POLL:
+            return {...state, poll: action.payload.poll, isFetching: false };
         case SUBMIT_VOTE:
-            return {...state, message: action.payload.message};
+            return {...state, message: action.payload.message, isFetching: false };
         case ADD_POLL:
-            return {...state, message: action.payload.message};
+            return {...state, message: action.payload.message, poll: action.payload.poll, isFetching: false };
         case DELETE_POLL:
-            return {...state, message: action.payload.message};
+            return {...state, message: action.payload.message, isFetching: false };
         case ADD_OPTION:
-            return {...state, message: action.payload.message};
+            return {...state, message: action.payload.message, isFetching: false };
         case POLL_ERROR:
-            return {...state, error: action.payload};
+            return {...state, error: action.payload, isFetching: false };
     }
     return state;
 };

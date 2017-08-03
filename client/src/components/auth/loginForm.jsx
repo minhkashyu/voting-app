@@ -11,10 +11,10 @@ const form = reduxForm({
 
 class LoginForm extends Component {
     render() {
-        const { handleSubmit, pristine, reset, submitting } = this.props;
+        const { handleSubmit, pristine, reset, submitting, onSubmitLogin } = this.props;
         return (
             <div>
-                <form onSubmit={handleSubmit(this.props.onSubmitLogin)}>
+                <form onSubmit={handleSubmit(onSubmitLogin)}>
                     <Field
                     name="email"
                     type="email"

@@ -32,6 +32,21 @@ body {
   color: #151515;
   font-style: italic; }
 
+a {
+  color: #125D84;
+  text-decoration: none;
+  -webkit-transition: color 0.25s ease-in-out;
+  /* WebKit */
+  -moz-transition: color 0.25s ease-in-out;
+  /* Mozilla */
+  -o-transition: color 0.25s ease-in-out;
+  /* Opera */
+  transition: color 0.25s ease-in-out;
+  /* Generic */ }
+  a:focus, a:hover {
+    color: #15A9C7;
+    text-decoration: none; }
+
 .btn-mt {
   margin: 5px;
   background-color: #125D84;
@@ -64,6 +79,13 @@ body {
       .panel-changed .panel-heading a:focus, .panel-changed .panel-heading a:hover {
         color: white;
         font-weight: bold; }
+
+.list-group-item {
+  padding: 0; }
+  .list-group-item a.btn {
+    display: block;
+    padding: 10px 15px;
+    border: 0 none; }
 
 .navbar-changed .navbar-nav li a, .navbar-changed .navbar-nav li.open .dropdown-menu li a, .navbar-changed .navbar-nav li a:focus, .navbar-changed .navbar-nav li.open .dropdown-menu li a:focus, .navbar-changed .navbar-nav li a:hover, .navbar-changed .navbar-nav li.open .dropdown-menu li a:hover, .navbar-changed .navbar-nav li a.active, .navbar-changed .navbar-nav li.open .dropdown-menu li a.active, .navbar-changed .navbar-nav li button, .navbar-changed .navbar-nav li.open .dropdown-menu li button {
   background: transparent;
@@ -220,11 +242,12 @@ body {
 .navbar-clear-margin {
   margin-bottom: 0; }
 
-/* loading image */
-.loading-container {
+.loading-container,
+.loading {
   display: block; }
 
-.loading-container > img {
+.loading-container > img,
+.loading > img {
   margin: 20px auto; }
 
 /* main content */

@@ -7,7 +7,7 @@ import {
 
 import { CookiesProvider } from 'react-cookie';
 
-import Loading from './components/template/loading.jsx'
+import LoadingContainer from './components/template/loadingContainer.jsx';
 import NavBar from './components/template/navBar.jsx';
 import Footer from './components/template/footer.jsx';
 
@@ -40,8 +40,8 @@ class App extends Component {
             <CookiesProvider>
                 <Router>
                     <div className="App">
-                        <Loading/>
-                        <NavBar/>
+                        <LoadingContainer />
+                        <NavBar />
                         <div className="container main-container hidden-container">
                             <Switch>
                                 <Route exact path="/" component={Home} />
@@ -53,13 +53,13 @@ class App extends Component {
                                 <Route path="/reset-password/:resetToken" component={ResetPassword} />
 
                                 <Route path="/my-polls" component={RequireAuth(MyPolls)} />
-                                <Route path="/poll/new" component={RequireAuth(NewPoll)} />
-                                <Route path="/poll/:pollId" component={ViewPoll} />
+                                <Route path="/polls/new" component={RequireAuth(NewPoll)} />
+                                <Route path="/polls/:pollId" component={ViewPoll} />
 
                                 <Route component={NotFound} />
                             </Switch>
                         </div>
-                        <Footer/>
+                        <Footer />
                     </div>
                 </Router>
             </CookiesProvider>

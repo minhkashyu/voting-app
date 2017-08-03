@@ -7,12 +7,13 @@ import {
     google,
     forgotPassword,
     verifyToken
-    } from '../controllers/authentication';
+    } from './../controllers/authentication';
 import {
-    getPolls,
-    getMyPolls,
+    fetchPolls,
+    fetchMyPolls,
+    fetchSinglePoll,
     addPoll
-    } from '../controllers/polling';
+    } from './../controllers/polling';
 
 // Middleware to require login/auth
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -76,29 +77,17 @@ module.exports = (app) => {
     authRoutes.get('/google/callback', googleLoginCb, google);
 
     //=========================
-    // User Routes
-    //=========================
-
-    // Test protected route
-    apiRoutes.get('/protected', requireAuth, (req, res) => {
-        res.send({ content: 'The protected test route is functional!' });
-    });
-
-    //=========================
     // Poll Routes
     //=========================
 
     //fetchPolls()
-    apiRoutes.get('/polls', getPolls);
+    apiRoutes.get('/polls', fetchPolls);
     //fetchMyPolls()
-    apiRoutes.get('/users/:userId/polls', requireAuth, getMyPolls);
+    apiRoutes.get('/polls/my', requireAuth, fetchMyPolls);
     //fetchSinglePoll()
-    apiRoutes.get('/polls/:pollId', (req, res) => {
-        let pollId = req.params.pollId;
-        res.send({ content: 'Get specific poll' });
-    });
+    apiRoutes.get('/polls/:pollId', fetchSinglePoll);
     //addPoll(data)
-    apiRoutes.post('/users/:userId/polls', requireAuth, addPoll);
+    apiRoutes.post('/polls', requireAuth, addPoll);
     //deletePoll()
     apiRoutes.delete(`/polls/:pollId`, (req, res) => {
         let pollId = req.params.pollId;

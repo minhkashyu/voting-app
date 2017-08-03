@@ -12,16 +12,9 @@ body {
 @import "partials/typography";
 @import "partials/button";
 @import "partials/panel";
+@import "partials/listGroup";
 @import "partials/navBar";
-
-/* loading image */
-.loading-container {
-    display: block;
-}
-
-.loading-container > img {
-    margin: 20px auto;
-}
+@import "partials/loading";
 
 /* main content */
 .main-container {

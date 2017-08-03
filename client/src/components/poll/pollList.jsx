@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 
-import PollItem from './pollItem.jsx';
-
 class PollList extends Component {
-
     render() {
         return (
-            <div className="polls">
-                {this.props.polls.map(poll => <PollItem
-                key={poll.id}
-                title={poll.title}
-                />)}
-            </div>
+            <ul className="list-group">
+                {this.props.polls.map(poll =>
+                    <li className="list-group-item" key={poll._id}>
+                        <a className="btn btn-default" href={`/polls/${poll._id}`}>{poll.title}</a>
+                    </li>
+                )}
+            </ul>
         );
     }
 }

@@ -87,3 +87,23 @@ export const renderOptions = ({ fields, meta: { touched, error, warning } }) => 
         <button type="button" className="btn btn-mt" onClick={() => fields.push()}>More Options</button>
     </div>
 );
+
+export const renderSelect = ({ options, meta: { touched, error, warning } }) => (
+    <Field name="options" component="select" className="form-control">
+        <option>Please select an option to vote for...</option>
+        {options.map(option => <option key={option._id} value={option._id}>{option.name}</option>)}
+        <option value="custom">I'd like my own option</option>
+    </Field>
+    {touched && ((error && <span className="help-block">{error}</span>) || (warning && <span className="help-block">{warning}</span>))}
+);
+
+export const validate = values => {
+    const errors = {};
+    if(!values.optionValue) {
+        errors.options = "Please select an option to vote for..."
+    }
+    if (values.optionValue === 'custom' && !values.customOption) {
+        errors.customOption = 'Required';
+    }
+    return errors;
+};

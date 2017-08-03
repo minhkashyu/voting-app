@@ -6,7 +6,7 @@ import pollReducer from './poll_reducer';
 const rootReducer = combineReducers({
     form: formReducer,
     auth: authReducer,
-    poll: pollReducer
+    polling: pollReducer
 });
 
 export default rootReducer; 

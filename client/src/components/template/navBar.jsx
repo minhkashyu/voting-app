@@ -20,7 +20,7 @@ const authenticatedItems = [
         icon: 'glyphicon glyphicon-star'
     },
     {
-        link: '/poll/new',
+        link: '/polls/new',
         name: 'New Poll',
         icon: 'glyphicon glyphicon-plus'
     }

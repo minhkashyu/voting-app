@@ -3,7 +3,7 @@ import { logoutUser } from './auth';
 export const API_URL = process.env.REACT_APP_API_URL;
 export const PUBLIC_URL = process.env.PUBLIC_URL;
 
-export function errorHandler(dispatch, error, type) {
+export const errorHandler = (dispatch, error, type) => {
     let errorMessage = error.response ? error.response.data : error;
 
     // NOT AUTHENTICATED ERROR
@@ -16,90 +16,50 @@ export function errorHandler(dispatch, error, type) {
         type,
         payload: errorMessage
     });
-}
+};
 
-// Post Request
-export function postData(action, errorType, isAuthReq, url, dispatch, cookies, data) {
-    const requestUrl = API_URL + url;
+const request = (axiosRequest, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data) => {
+    dispatch({ type: fetchingType });
+    let requestUrl = API_URL + url;
     let headers = {};
 
     if (isAuthReq) {
         headers = { headers: { Authorization: cookies.get('token') } };
     }
 
-    axios.post(requestUrl, data, headers)
+    axiosRequest(requestUrl, data, headers)
         .then((response) => {
-            //dispatch({
-            //    type: action,
-            //    payload: response.data
-            //});
-            console.log(response);
-        })
-        .catch((error) => {
-            //errorHandler(dispatch, error, errorType);
-            console.log(error);
-        });
-}
-
-// Get Request
-export function getData(action, errorType, isAuthReq, url, dispatch, cookies) {
-    const requestUrl = API_URL + url;
-    let headers = {};
-
-    if (isAuthReq) {
-        headers = { headers: { Authorization: cookies.get('token') } };
-    }
-
-    axios.get(requestUrl, headers)
-        .then((response) => {
+            console.dir(response.data);
             dispatch({
-                type: action,
+                type: actionType,
                 payload: response.data
             });
         })
         .catch((error) => {
             errorHandler(dispatch, error, errorType);
         });
-}
+};
 
-// Put Request
-export function putData(action, errorType, isAuthReq, url, dispatch, cookies, data) {
-    const requestUrl = API_URL + url;
-    let headers = {};
+const axiosGet = (requestUrl, data, headers) => {
+    return axios.get(requestUrl, headers);
+};
 
-    if (isAuthReq) {
-        headers = { headers: { Authorization: cookies.get('token') } };
-    }
+const axiosPost = (requestUrl, data, headers) => {
+    return axios.post(requestUrl, data, headers);
+};
 
-    axios.put(requestUrl, data, headers)
-        .then((response) => {
-            dispatch({
-                type: action,
-                payload: response.data
-            });
-        })
-        .catch((error) => {
-            errorHandler(dispatch, error, errorType);
-        });
-}
+const axiosPut = (requestUrl, data, headers) => {
+    return axios.put(requestUrl, data, headers);
+};
 
-// Delete Request
-export function deleteData(action, errorType, isAuthReq, url, dispatch, cookies) {
-    const requestUrl = API_URL + url;
-    let headers = {};
+const axiosDelete = (requestUrl, data, headers) => {
+    return axios.delete(requestUrl, headers);
+};
 
-    if (isAuthReq) {
-        headers = { headers: { Authorization: cookies.get('token') } };
-    }
+export const getRequest = (fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies) => request(axiosGet, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, null);
 
-    axios.delete(requestUrl, headers)
-        .then((response) => {
-            dispatch({
-                type: action,
-                payload: response.data
-            });
-        })
-        .catch((error) => {
-            errorHandler(dispatch, error, errorType);
-        });
-}
+export const postRequest = (fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data) => request(axiosPost, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data);
+
+export const putRequest = (fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data) => request(axiosPut, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data);
+
+export const deleteRequest = (fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies) => request(axiosDelete, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, null);
