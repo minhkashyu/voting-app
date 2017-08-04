@@ -29,7 +29,7 @@ class LoginForm extends Component {
                     component={renderField}
                     validate={[required, maxLength100, minLength6]}
                     />
-                    <button type="submit" disabled={submitting} className="btn btn-mt">Submit</button>
+                    <button type="submit" disabled={pristine || submitting} className="btn btn-mt">Submit</button>
                     <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-mt">Clear Values</button>
                 </form>
                 <Link to="/forgot-password">Forgot Password?</Link>

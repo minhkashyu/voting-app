@@ -45,7 +45,7 @@ class NewPoll extends React.Component {
                     validate={[required, maxLength100, minLength2]}
                     />
                     <FieldArray name="options" component={renderOptions} />
-                    <button type="submit" disabled={submitting} className="btn btn-mt">Submit</button>
+                    <button type="submit" disabled={pristine || submitting} className="btn btn-mt">Submit</button>
                     <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-mt">Clear Values</button>
                 </form>
             </div>

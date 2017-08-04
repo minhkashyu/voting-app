@@ -9,7 +9,7 @@ export const API_URL = process.env.REACT_APP_API_URL;
 export const PUBLIC_URL = process.env.PUBLIC_URL;
 
 export const errorHandler = (dispatch, error, type) => {
-    let errorMessage = error.response ? error.response.data : error;
+    let errorMessage = error.response ? (error.response.data.error || error.response.data ) : error;
     dispatch({
         type,
         payload: errorMessage

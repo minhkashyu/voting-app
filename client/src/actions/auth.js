@@ -112,7 +112,7 @@ export function getForgotPasswordToken({ email }) {
             .then((response) => {
                 dispatch({
                     type: FORGOT_PASSWORD_REQUEST,
-                    payload: response.data.message
+                    payload: response.data
                 });
                 dispatch({ type: NOT_FETCHING });
             })
@@ -129,7 +129,7 @@ export function resetPassword(token, { password }) {
             .then((response) => {
                 dispatch({
                     type: RESET_PASSWORD_REQUEST,
-                    payload: response.data.message
+                    payload: response.data
                 });
                 dispatch({ type: NOT_FETCHING });
             })

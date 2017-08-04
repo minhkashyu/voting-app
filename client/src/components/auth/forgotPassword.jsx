@@ -1,37 +1,16 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-import { getForgotPasswordToken } from '../../actions/auth';
+import { required, email, maxLength100, renderField } from './../template/formValidation.jsx';
+import { getForgotPasswordToken } from './../../actions/auth';
 
 const form = reduxForm({
     form: 'forgotPassword'
 });
 
 class ForgotPassword extends Component {
-    static propTypes = {
-        history: PropTypes.shape({
-            push: PropTypes.func.isRequired
-        }).isRequired
-    };
-
-    componentWillMount() {
-        if (this.props.isAuthenticated) {
-            this.props.history.push('/my-polls');
-        }
-    }
-
-    componentWillUpdate(nextProps) {
-        if (nextProps.isAuthenticated) {
-            this.props.history.push('/my-polls');
-        }
-    }
-
-    handleFormSubmit(formProps) {
-        this.props.getForgotPasswordToken(formProps);
-    }
 
     renderAlert() {
         if (this.props.errorMessage) {
@@ -44,16 +23,30 @@ class ForgotPassword extends Component {
     }
 
     render() {
-        const { handleSubmit } = this.props;
+        const { isAuthenticated, location, message, handleSubmit, pristine, submitting, getForgotPasswordToken } = this.props;
+        if (isAuthenticated) {
+            return (
+                <Redirect to={{
+                    pathname: '/my-polls',
+                    state: { from: location }
+                }}/>
+            );
+        }
+        if (message.length > 0) {
+            return <p className="text-center">{message}</p>
+        }
 
         return (
-            <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-                <div>
-                    {this.renderAlert()}
-                    <label>Email</label>
-                    <Field name="email" className="form-control" component="input" type="text" />
-                </div>
-                <button type="submit" className="btn btn-primary">Reset Password</button>
+            <form onSubmit={handleSubmit(getForgotPasswordToken)}>
+                {this.renderAlert()}
+                <Field
+                name="email"
+                type="email"
+                label="Email"
+                component={renderField}
+                validate={[required, email, maxLength100]}
+                />
+                <button type="submit" disabled={pristine || submitting} className="btn btn-mt">Reset Password</button>
             </form>
         );
     }
@@ -67,4 +60,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default withRouter(connect(mapStateToProps, { getForgotPasswordToken })(form(ForgotPassword)));
+export default connect(mapStateToProps, { getForgotPasswordToken })(form(ForgotPassword));
