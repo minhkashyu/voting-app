@@ -18,13 +18,13 @@ class ForgotPassword extends Component {
     };
 
     componentWillMount() {
-        if (this.props.authenticated) {
+        if (this.props.isAuthenticated) {
             this.props.history.push('/my-polls');
         }
     }
 
     componentWillUpdate(nextProps) {
-        if (nextProps.authenticated) {
+        if (nextProps.isAuthenticated) {
             this.props.history.push('/my-polls');
         }
     }
@@ -63,7 +63,7 @@ function mapStateToProps(state) {
     return {
         errorMessage: state.auth.error,
         message: state.auth.message,
-        authenticated: state.auth.authenticated
+        isAuthenticated: state.auth.isAuthenticated
     };
 }
 

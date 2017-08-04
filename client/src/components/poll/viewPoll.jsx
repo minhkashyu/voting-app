@@ -2,44 +2,35 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchSinglePoll, submitVote } from './../../actions/polling';
-import Loading from './../template/loading.jsx';
 import VoteForm from './voteForm.jsx';
+import Loading from './../template/loading.jsx';
 
 class ViewPoll extends Component {
 
-    constructor(props) {
-        super(props);
-
+    componentDidMount() {
         const { match, fetchSinglePoll } = this.props;
         fetchSinglePoll(match.params.pollId);
     }
 
     renderForm() {
-        if(this.props.poll.options && this.props.poll.options.length > 0) {
+        const { poll, submitVote } = this.props;
+        if(poll.options && poll.options.length > 0) {
             return (
-                <VoteForm options={this.props.poll.options} onSubmitVote={this.props.submitVote} />
+                <VoteForm options={poll.options} onSubmitVote={submitVote} />
             );
         }
-    }
-
-    renderFetching() {
-        if (!this.props.isFetching) {
-            return (
-                <div>
-                    <h3>{this.props.poll.title}</h3>
-                    <h4>I'd like to vote for</h4>
-                    {this.renderForm()}
-                </div>
-            );
-        }
-        return (
-            <Loading />
-        );
     }
 
     render() {
+        if (this.props.isFetching) {
+            return <Loading />;
+        }
         return (
-            <div>{this.renderFetching()}</div>
+            <div>
+                <h3>{this.props.poll.title}</h3>
+                <h4>I'd like to vote for</h4>
+                {this.renderForm()}
+            </div>
         );
     }
 }
@@ -47,7 +38,7 @@ class ViewPoll extends Component {
 function mapStateToProps(state) {
     return {
         poll: state.polling.poll,
-        isFetching: state.polling.isFetching
+        isFetching: state.main.isFetching
     };
 }
 

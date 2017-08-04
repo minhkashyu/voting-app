@@ -15,7 +15,6 @@ class LoginMedia extends Component {
     }
 
     render() {
-
         return (
             <div>
                 <Link onClick={(e) => this.handleClickFacebook(e)} to="#" className="btn btn-mt" id="btn-facebook">

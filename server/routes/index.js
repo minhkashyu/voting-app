@@ -59,7 +59,6 @@ module.exports = (app) => {
     // POST /api/auth/register
     authRoutes.post('/register', localRegister, register);
     // POST /api/auth/login
-    //authRoutes.post('/login', localLogin);
     authRoutes.post('/login', localLogin, login);
     // POST /api/auth/forgot-password
     // Password reset request route (generate/send token)
@@ -73,6 +72,7 @@ module.exports = (app) => {
     authRoutes.get('/facebook/callback', facebookLoginCb, facebook);
     //authRoutes.get('/twitter', twitterLogin);
     //authRoutes.get('/twitter/callback', twitterLogin, authController.twitter);
+    // GET /api/auth/google
     authRoutes.get('/google', googleLogin);
     authRoutes.get('/google/callback', googleLoginCb, google);
 

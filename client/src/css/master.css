@@ -87,6 +87,9 @@ a {
     padding: 10px 15px;
     border: 0 none; }
 
+.error {
+  color: #CC0000; }
+
 .navbar-changed .navbar-nav li a, .navbar-changed .navbar-nav li.open .dropdown-menu li a, .navbar-changed .navbar-nav li a:focus, .navbar-changed .navbar-nav li.open .dropdown-menu li a:focus, .navbar-changed .navbar-nav li a:hover, .navbar-changed .navbar-nav li.open .dropdown-menu li a:hover, .navbar-changed .navbar-nav li a.active, .navbar-changed .navbar-nav li.open .dropdown-menu li a.active, .navbar-changed .navbar-nav li button, .navbar-changed .navbar-nav li.open .dropdown-menu li button {
   background: transparent;
   line-height: 60px;

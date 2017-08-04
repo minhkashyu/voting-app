@@ -3,19 +3,20 @@ import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { PropTypes } from 'prop-types';
 
-import { renderField, validate } from './../template/formValidation.jsx';
+import { renderField, renderSelect, validate } from './../template/formValidation.jsx';
 
 class VoteForm extends React.Component {
+
+    static propTypes = {
+        onSubmitVote: PropTypes.func.isRequired,
+        options: PropTypes.array.isRequired
+    };
 
     render() {
         const { handleSubmit, pristine, submitting, onSubmitVote, options, optionValue } = this.props;
         return (
             <form onSubmit={handleSubmit(onSubmitVote)}>
-                <Field name="options" component="select" className="form-control">
-                    <option>Please select an option to vote for...</option>
-                    {options.map(option => <option key={option._id} value={option._id}>{option.name}</option>)}
-                    <option value="custom">I'd like my own option</option>
-                </Field>
+                <Field name="options" options={options} component={renderSelect} />
                 {optionValue === 'custom' &&
                     <Field
                     name="customOption"
@@ -29,11 +30,6 @@ class VoteForm extends React.Component {
         );
     }
 }
-
-VoteForm.propTypes = {
-    onSubmitVote: PropTypes.func.isRequired,
-    options: PropTypes.array.isRequired
-};
 
 // Decorate with redux-form
 const form = reduxForm({

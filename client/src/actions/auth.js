@@ -1,40 +1,26 @@
 import axios from 'axios';
 import {
-        API_URL,
-        PUBLIC_URL ,
-        errorHandler
+    API_URL,
+    errorHandler
     } from './index';
 import {
-        AUTH_USER,
-        UNAUTH_USER,
-        FORGOT_PASSWORD_REQUEST,
-        RESET_PASSWORD_REQUEST,
-        AUTH_ERROR
+    FETCHING,
+    NOT_FETCHING,
+    AUTH_USER,
+    UNAUTH_USER,
+    FORGOT_PASSWORD_REQUEST,
+    RESET_PASSWORD_REQUEST,
+    AUTH_ERROR
     } from './types';
 
 //= ===============================
 // Authentication actions
 //= ===============================
 
-const loginSuccess = (dispatch, cookies, response) => {
-    cookies.set('token', response.data.token, { path: '/' });
-    cookies.set('user', response.data.user, { path: '/' });
-    dispatch({ type: AUTH_USER });
-};
-
-const loginError = (dispatch, error) => {
-    let errorMessage = error.response ? error.response.data : error;
-    dispatch({
-        type: AUTH_ERROR,
-        payload: errorMessage
-    })
-};
-
 export function authenticatedTest() {
     return function (dispatch, getState, cookies) {
         const token = cookies.get('token');
         if (token) {
-            // User has token and is probably authenticated
             dispatch({ type: AUTH_USER });
         }
         else {
@@ -43,51 +29,67 @@ export function authenticatedTest() {
     }
 }
 
-// TO-DO: Add expiration to cookie
+const loginSuccess = (dispatch, cookies, response) => {
+    cookies.set('token', response.data.token, {
+        path: '/',
+        maxAge: 10790 // expires in nearly 3 hours
+    });
+    cookies.set('user', response.data.user, {
+        path: '/',
+        maxAge: 10790 // expires in nearly 3 hours
+    });
+    dispatch({ type: NOT_FETCHING });
+    dispatch({ type: AUTH_USER });
+};
+
 export function loginUser({ email, password }) {
     return function (dispatch, getState, cookies) {
+        dispatch({ type: FETCHING });
         axios.post(`${API_URL}/auth/login`, { email, password })
             .then((response) => {
                 loginSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
-                loginError(dispatch, error);
+                errorHandler(dispatch, error, AUTH_ERROR);
             });
     };
 }
 
 export function registerUser({ firstName, lastName, email, password }) {
     return function (dispatch, getState, cookies) {
+        dispatch({ type: FETCHING });
         axios.post(`${API_URL}/auth/register`, { firstName, lastName, email, password })
             .then((response) => {
                 loginSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
-                loginError(dispatch, error);
+                errorHandler(dispatch, error, AUTH_ERROR);
             });
     };
 }
 
 export function loginFacebook() {
     return function (dispatch, getState, cookies) {
+        dispatch({ type: FETCHING });
         axios.get(`${API_URL}/auth/facebook`)
             .then((response) => {
                 loginSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
-                loginError(dispatch, error);
+                errorHandler(dispatch, error, AUTH_ERROR);
             });
     };
 }
 
 export function loginGoogle() {
     return function (dispatch, getState, cookies) {
+        dispatch({ type: FETCHING });
         axios.get(`${API_URL}/auth/google`)
             .then((response) => {
                 loginSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
-                loginError(dispatch, error);
+                errorHandler(dispatch, error, AUTH_ERROR);
             });
     };
 }
@@ -100,18 +102,19 @@ export function logoutUser(error) {
             type: UNAUTH_USER,
             payload: error || ''
         });
-        window.location.href = `${PUBLIC_URL}/login`;
     };
 }
 
 export function getForgotPasswordToken({ email }) {
     return function (dispatch) {
+        dispatch({ type: FETCHING });
         axios.post(`${API_URL}/auth/forgot-password`, { email })
             .then((response) => {
                 dispatch({
                     type: FORGOT_PASSWORD_REQUEST,
                     payload: response.data.message
                 });
+                dispatch({ type: NOT_FETCHING });
             })
             .catch((error) => {
                 errorHandler(dispatch, error, AUTH_ERROR);
@@ -121,13 +124,14 @@ export function getForgotPasswordToken({ email }) {
 
 export function resetPassword(token, { password }) {
     return function (dispatch) {
+        dispatch({ type: FETCHING });
         axios.post(`${API_URL}/auth/reset-password/${token}`, { password })
             .then((response) => {
                 dispatch({
                     type: RESET_PASSWORD_REQUEST,
                     payload: response.data.message
                 });
-                window.location.href = `${PUBLIC_URL}/login`;
+                dispatch({ type: NOT_FETCHING });
             })
             .catch((error) => {
                 errorHandler(dispatch, error, AUTH_ERROR);

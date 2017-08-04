@@ -89,21 +89,37 @@ export const renderOptions = ({ fields, meta: { touched, error, warning } }) => 
 );
 
 export const renderSelect = ({ options, meta: { touched, error, warning } }) => (
-    <Field name="options" component="select" className="form-control">
-        <option>Please select an option to vote for...</option>
-        {options.map(option => <option key={option._id} value={option._id}>{option.name}</option>)}
-        <option value="custom">I'd like my own option</option>
-    </Field>
-    {touched && ((error && <span className="help-block">{error}</span>) || (warning && <span className="help-block">{warning}</span>))}
+    <div className="form-group">
+        <Field name="options" component="select" className="form-control">
+            <option value="">Please select an option to vote for...</option>
+            {options.map(option => <option key={option._id} value={option._id}>{option.name}</option>)}
+            <option value="custom">I'd like my own option</option>
+        </Field>
+        {touched && ((error && <span className="help-block">{error}</span>) || (warning && <span className="help-block">{warning}</span>))}
+    </div>
 );
 
 export const validate = values => {
     const errors = {};
-    if(!values.optionValue) {
+    console.log(values.options);
+    let min = 2;
+    let max = 100;
+    if(!values.options) {
         errors.options = "Please select an option to vote for..."
     }
-    if (values.optionValue === 'custom' && !values.customOption) {
-        errors.customOption = 'Required';
+    if (values.options === 'custom') {
+        if (!values.customOption) {
+            errors.customOption = 'Required';
+        }
+        else if (values.customOption.length < min) {
+            errors.customOption =  `Must be ${min} characters or more`;
+        }
+        else if (values.customOption.length > max) {
+            errors.customOption =  `Must be ${max} characters or less`;
+        }
+        else {
+            errors.customOption = undefined;
+        }
     }
     return errors;
 };

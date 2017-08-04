@@ -1,7 +1,7 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, FieldArray, reduxForm } from 'redux-form';
-import { PropTypes } from 'prop-types';
 
 import { required, maxLength100, minLength2, renderField, renderOptions } from './../template/formValidation.jsx';
 import { addPoll } from './../../actions/polling';
@@ -15,47 +15,40 @@ const form = reduxForm({
 
 class NewPoll extends React.Component {
 
-    static propTypes = {
-        history: PropTypes.shape({
-            push: PropTypes.func.isRequired
-        }).isRequired
-    };
-
-    componentWillUpdate(nextProps) {
-        if (Object.keys(nextProps.poll).length > 0 && nextProps.poll.constructor === Object) {
-            this.props.history.push(`/polls/${nextProps.poll._id}`);
+    render() {
+        const { handleSubmit, pristine, reset, submitting, isRedirected, location, isFetching, message, addPoll, poll } = this.props;
+        if (isRedirected) {
+            return (
+                <Redirect to={{
+                    pathname: `/polls/${poll._id}`,
+                    state: { from: location }
+                }}/>
+            );
         }
-    }
-
-    renderFetching() {
-        if (!this.props.isFetching) {
-            const { handleSubmit, pristine, reset, submitting, addPoll } = this.props;
+        if (isFetching) {
             return (
                 <div>
-                    <h3>Create a New Poll</h3>
-                    <form onSubmit={handleSubmit(addPoll)}>
-                        <Field
-                        name="title"
-                        type="text"
-                        label="Title"
-                        component={renderField}
-                        validate={[required, maxLength100, minLength2]}
-                        />
-                        <FieldArray name="options" component={renderOptions} />
-                        <button type="submit" disabled={submitting} className="btn btn-mt">Submit</button>
-                        <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-mt">Clear Values</button>
-                    </form>
+                    <Loading />
+                    {message && <h1 className="text-center">message</h1>}
                 </div>
             );
         }
         return (
-            <Loading />
-        );
-    }
-
-    render() {
-        return (
-            <div>{this.renderFetching()}</div>
+            <div>
+                <h3>Create a New Poll</h3>
+                <form onSubmit={handleSubmit(addPoll)}>
+                    <Field
+                    name="title"
+                    type="text"
+                    label="Title"
+                    component={renderField}
+                    validate={[required, maxLength100, minLength2]}
+                    />
+                    <FieldArray name="options" component={renderOptions} />
+                    <button type="submit" disabled={submitting} className="btn btn-mt">Submit</button>
+                    <button type="button" disabled={pristine || submitting} onClick={reset} className="btn btn-mt">Clear Values</button>
+                </form>
+            </div>
         );
     }
 }
@@ -64,7 +57,8 @@ function mapStateToProps(state) {
     return {
         message: state.polling.message,
         poll: state.polling.poll,
-        isFetching: state.polling.isFetching
+        isRedirected: state.main.isRedirected,
+        isFetching: state.main.isFetching
     };
 }
 

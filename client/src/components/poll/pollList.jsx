@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class PollList extends Component {
     render() {
@@ -6,7 +7,7 @@ class PollList extends Component {
             <ul className="list-group">
                 {this.props.polls.map(poll =>
                     <li className="list-group-item" key={poll._id}>
-                        <a className="btn btn-default" href={`/polls/${poll._id}`}>{poll.title}</a>
+                        <Link className="btn btn-default" to={`/polls/${poll._id}`}>{poll.title}</Link>
                     </li>
                 )}
             </ul>

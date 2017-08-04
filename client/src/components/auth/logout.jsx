@@ -1,15 +1,32 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { logoutUser } from './../../actions/auth';
 
 class Logout extends Component {
-    componentWillMount() {
+
+    componentDidMount() {
         this.props.logoutUser();
     }
 
     render() {
-        return <div>See you back soon!</div>;
+        if (this.props.isAuthenticated) {
+            return (
+                <Redirect to={{
+                    pathname: '/login',
+                    state: { from: this.props.location }
+                }}/>
+            );
+        }
+        return <p className="text-center">You are being logged out!</p>;
     }
 }
 
-export default connect(null, { logoutUser })(Logout);
+function mapStateToProps(state) {
+    return {
+        isAuthenticated: state.auth.isAuthenticated
+    };
+}
+
+export default connect(mapStateToProps, { logoutUser })(Logout);

@@ -8,7 +8,7 @@ import { setLocalUserInfo, setFacebookInfo, setTwitterInfo, setGoogleInfo, getRo
 // Generate JWT
 const generateToken = user => {
     return jwt.sign(user, config.secret, {
-        expiresIn: 10080 // in seconds = 2:48 hrs
+        expiresIn: 10800 // in seconds = 3 hrs
     });
 };
 

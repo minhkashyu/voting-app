@@ -3,13 +3,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchMyPolls } from './../../actions/polling';
-import Loading from './../template/loading.jsx';
 import PollList from './../poll/pollList.jsx';
+import Loading from './../template/loading.jsx';
 
 class MyPolls extends React.Component {
 
-    constructor(props) {
-        super(props);
+    componentDidMount() {
         this.props.fetchMyPolls();
     }
 
@@ -23,28 +22,20 @@ class MyPolls extends React.Component {
         return <div>There are no polls.</div>;
     }
 
-    renderFetching() {
-        if (!this.props.isFetching) {
-            return (
-                <div className="panel panel-default panel-changed">
-                    <div className="panel-heading">
-                        <h3>My Polls</h3>
-                        <p>You can create a new poll <Link to="/poll/new">here</Link></p>
-                    </div>
-                    <div className="panel-body">
-                    {this.renderPolls()}
-                    </div>
-                </div>
-            );
+    render() {
+        if (this.props.isFetching) {
+            return <Loading />;
         }
         return (
-            <Loading />
-        );
-    }
-
-    render() {
-        return (
-            <div>{this.renderFetching()}</div>
+            <div className="panel panel-default panel-changed">
+                <div className="panel-heading">
+                    <h3>My Polls</h3>
+                    <p>You can create a new poll <Link to="/polls/new">here</Link></p>
+                </div>
+                <div className="panel-body">
+                    {this.renderPolls()}
+                </div>
+            </div>
         );
     }
 }
@@ -52,7 +43,7 @@ class MyPolls extends React.Component {
 function mapStateToProps(state) {
     return {
         polls: state.polling.polls,
-        isFetching: state.polling.isFetching
+        isFetching: state.main.isFetching
     };
 }
 

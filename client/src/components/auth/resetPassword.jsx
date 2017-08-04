@@ -40,13 +40,13 @@ class ResetPassword extends Component {
     };
 
     componentWillMount() {
-        if (this.props.authenticated) {
+        if (this.props.isAuthenticated) {
             this.context.router.push('/my-polls');
         }
     }
 
     componentWillUpdate(nextProps) {
-        if (nextProps.authenticated) {
+        if (nextProps.isAuthenticated) {
             this.context.router.push('/my-polls');
         }
     }

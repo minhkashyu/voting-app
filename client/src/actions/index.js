@@ -1,25 +1,24 @@
 import axios from 'axios';
-import { logoutUser } from './auth';
+import {
+    FETCHING,
+    NOT_FETCHING,
+    REDIRECT
+    } from './types';
+
 export const API_URL = process.env.REACT_APP_API_URL;
 export const PUBLIC_URL = process.env.PUBLIC_URL;
 
 export const errorHandler = (dispatch, error, type) => {
     let errorMessage = error.response ? error.response.data : error;
-
-    // NOT AUTHENTICATED ERROR
-    if (error.status === 401 || error.response.status === 401) {
-        errorMessage = 'You are not authorized to do this.';
-        return dispatch(logoutUser(errorMessage));
-    }
-
     dispatch({
         type,
         payload: errorMessage
     });
+    dispatch({ type: NOT_FETCHING });
 };
 
-const request = (axiosRequest, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data) => {
-    dispatch({ type: fetchingType });
+const request = (axiosRequest, actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies, data) => {
+    dispatch({ type: FETCHING });
     let requestUrl = API_URL + url;
     let headers = {};
 
@@ -34,6 +33,10 @@ const request = (axiosRequest, fetchingType, actionType, errorType, isAuthReq, u
                 type: actionType,
                 payload: response.data
             });
+            dispatch({ type: NOT_FETCHING });
+            if (isRedirect) {
+                dispatch({ type: REDIRECT });
+            }
         })
         .catch((error) => {
             errorHandler(dispatch, error, errorType);
@@ -56,10 +59,10 @@ const axiosDelete = (requestUrl, data, headers) => {
     return axios.delete(requestUrl, headers);
 };
 
-export const getRequest = (fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies) => request(axiosGet, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, null);
+export const getRequest = (actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies) => request(axiosGet, actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies, null);
 
-export const postRequest = (fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data) => request(axiosPost, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data);
+export const postRequest = (actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies, data) => request(axiosPost, actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies, data);
 
-export const putRequest = (fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data) => request(axiosPut, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, data);
+export const putRequest = (actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies, data) => request(axiosPut, actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies, data);
 
-export const deleteRequest = (fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies) => request(axiosDelete, fetchingType, actionType, errorType, isAuthReq, url, dispatch, cookies, null);
+export const deleteRequest = (actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies) => request(axiosDelete, actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies, null);

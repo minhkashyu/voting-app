@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import { authenticatedTest } from './../../actions/auth';
 import CustomLink from './customLink.jsx';
-import logo from './../../logo.svg';
+import logo from './logo.svg';
 
 const authenticatedItems = [
     {
@@ -63,7 +63,7 @@ class NavBar extends React.Component {
 
     renderLinks() {
         // Authenticated navigation
-        if (this.props.authenticated) {
+        if (this.props.isAuthenticated) {
             const userName = this.props.cookies.get('user').name;
             return (
                 <ul className="nav navbar-nav navbar-right">
@@ -115,7 +115,7 @@ class NavBar extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        authenticated: state.auth.authenticated
+        isAuthenticated: state.auth.isAuthenticated
     };
 }
 
