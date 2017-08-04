@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
     FETCHING,
     NOT_FETCHING,
-    REDIRECT
+    REDIRECT,
+    NOT_REDIRECT
     } from './types';
 
 export const API_URL = process.env.REACT_APP_API_URL;
@@ -18,6 +19,7 @@ export const errorHandler = (dispatch, error, type) => {
 };
 
 const request = (axiosRequest, actionType, errorType, isAuthReq, isRedirect, url, dispatch, cookies, data) => {
+    dispatch({ type: NOT_REDIRECT });
     dispatch({ type: FETCHING });
     let requestUrl = API_URL + url;
     let headers = {};
