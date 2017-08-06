@@ -4,5 +4,6 @@ module.exports = {
     // Database connection information
     database: process.env.MONGO_URI || 'mongodb://localhost:27017',
     // Setting port for server
-    'port': process.env.PORT || 3000
+    port: process.env.PORT || 3000,
+    client_url: process.env.CLIENT_URL
 };

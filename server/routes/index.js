@@ -1,6 +1,7 @@
 import express from 'express';
 import {
     requireAuth,
+    loginSuccess,
     register,
     login,
     facebookLogin,
@@ -65,6 +66,9 @@ module.exports = (app) => {
     // GET /api/auth/google
     authRoutes.get('/google', googleLogin);
     authRoutes.get('/google/callback', googleLoginCb);
+
+    //Social Media test to return token and userInfo to client side
+    authRoutes.get('/loginSuccess', requireAuth, loginSuccess);
 
     //=========================
     // Poll Routes

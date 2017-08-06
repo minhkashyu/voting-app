@@ -13,6 +13,13 @@ const generateToken = user => {
 };
 
 export const requireAuth = passport.authenticate('jwt', { session: false });
+export const loginSuccess = (req, res, next) => {
+    const userInfo = req.headers.media === 'facebook' ? setFacebookInfo(req.user) : setGoogleInfo(req.user);
+    res.status(201).json({
+        token: req.headers.authorization,
+        user: userInfo
+    });
+};
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -56,13 +63,12 @@ export const facebookLoginCb = (req, res, next) => passport.authenticate('facebo
     if (!user) {
         return res.status(404).json({ error: info });
     }
-    const userInfo = setFacebookInfo(user);
 
-    res.status(200).json({
-        token: `JWT ${generateToken(userInfo)}`,
-        user: userInfo
-    });
+    const userInfo = setFacebookInfo(user);
+    const token = `JWT ${generateToken(userInfo)}`;
+    res.redirect(301, config.client_url + '/login-success/facebook/' + token);
 })(req, res, next);
+
 
 //export const twitterLogin = passport.authenticate('twitter', { session: false });
 //export const twitter = (req, res, next) => {
@@ -82,12 +88,10 @@ export const googleLoginCb = (req, res, next) => passport.authenticate('google',
     if (!user) {
         return res.status(404).json({ error: info });
     }
-    const userInfo = setGoogleInfo(user);
 
-    res.status(200).json({
-        token: `JWT ${generateToken(userInfo)}`,
-        user: userInfo
-    });
+    const userInfo = setGoogleInfo(user);
+    const token = `JWT ${generateToken(userInfo)}`;
+    res.redirect(301, config.client_url + '/login-success/google/' + token);
 })(req, res, next);
 
 //= =======================================

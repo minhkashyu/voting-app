@@ -8,7 +8,7 @@ const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeader(),
     // find the secret
     secretOrKey: config.secret
-    // TO-DO: Add issuer and audience checks
+    // TODO: Add issuer and audience checks
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
@@ -18,7 +18,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
                 return done(err);
             }
             if (!user) {
-                return done(null, false, { error: 'There is no user information to create token'});
+                return done(null, false);
             }
             return done(null, user)
         });

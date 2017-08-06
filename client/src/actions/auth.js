@@ -29,7 +29,7 @@ export function authenticatedTest() {
     }
 }
 
-const loginSuccess = (dispatch, cookies, response) => {
+const handleSuccess = (dispatch, cookies, response) => {
     cookies.set('token', response.data.token, {
         path: '/',
         maxAge: 10790 // expires in nearly 3 hours
@@ -42,12 +42,27 @@ const loginSuccess = (dispatch, cookies, response) => {
     dispatch({ type: AUTH_USER });
 };
 
+export function loginSuccess( media, jwt ) {
+    return function (dispatch, getState, cookies) {
+        dispatch({ type: FETCHING });
+        console.log(`Authorization: ${jwt}, Media: ${media}`);
+        const headers = { headers: { Authorization: jwt, Media: media} };
+        axios.get(`${API_URL}/auth/loginSuccess`, headers)
+            .then((response) => {
+                handleSuccess(dispatch, cookies, response);
+            })
+            .catch((error) => {
+                errorHandler(dispatch, error, AUTH_ERROR);
+            });
+    };
+}
+
 export function loginUser({ email, password }) {
     return function (dispatch, getState, cookies) {
         dispatch({ type: FETCHING });
         axios.post(`${API_URL}/auth/login`, { email, password })
             .then((response) => {
-                loginSuccess(dispatch, cookies, response);
+                handleSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
                 errorHandler(dispatch, error, AUTH_ERROR);
@@ -60,7 +75,7 @@ export function registerUser({ firstName, lastName, email, password }) {
         dispatch({ type: FETCHING });
         axios.post(`${API_URL}/auth/register`, { firstName, lastName, email, password })
             .then((response) => {
-                loginSuccess(dispatch, cookies, response);
+                handleSuccess(dispatch, cookies, response);
             })
             .catch((error) => {
                 errorHandler(dispatch, error, AUTH_ERROR);
@@ -71,26 +86,30 @@ export function registerUser({ firstName, lastName, email, password }) {
 export function loginFacebook() {
     return function (dispatch, getState, cookies) {
         dispatch({ type: FETCHING });
-        axios.get(`${API_URL}/auth/facebook`)
-            .then((response) => {
-                loginSuccess(dispatch, cookies, response);
-            })
-            .catch((error) => {
-                errorHandler(dispatch, error, AUTH_ERROR);
-            });
+        window.location = `${API_URL}/auth/facebook`;
+        //dispatch({ type: FETCHING });
+        //axios.get(`${API_URL}/auth/facebook`)
+        //    .then((response) => {
+        //        handleSuccess(dispatch, cookies, response);
+        //    })
+        //    .catch((error) => {
+        //        errorHandler(dispatch, error, AUTH_ERROR);
+        //    });
     };
 }
 
 export function loginGoogle() {
     return function (dispatch, getState, cookies) {
         dispatch({ type: FETCHING });
-        axios.get(`${API_URL}/auth/google`)
-            .then((response) => {
-                loginSuccess(dispatch, cookies, response);
-            })
-            .catch((error) => {
-                errorHandler(dispatch, error, AUTH_ERROR);
-            });
+        window.location = `${API_URL}/auth/google`;
+        //dispatch({ type: FETCHING });
+        //axios.get(`${API_URL}/auth/google`)
+        //    .then((response) => {
+        //        handleSuccess(dispatch, cookies, response);
+        //    })
+        //    .catch((error) => {
+        //        errorHandler(dispatch, error, AUTH_ERROR);
+        //    });
     };
 }
 

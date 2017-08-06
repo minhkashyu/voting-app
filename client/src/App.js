@@ -29,6 +29,7 @@ import MyPolls from './components/poll/myPolls.jsx';
 import NewPoll from './components/poll/newPoll.jsx';
 import ViewPoll from './components/poll/viewPoll.jsx';
 
+import LoginSuccess from './components/auth/loginSuccess.jsx';
 // Import higher order components
 import RequireAuth from './components/auth/requireAuth.jsx';
 
@@ -51,6 +52,7 @@ class App extends Component {
                                 <Route path="/logout" component={Logout} />
                                 <Route path="/forgot-password" component={ForgotPassword} />
                                 <Route path="/reset-password/:resetToken" component={ResetPassword} />
+                                <Route path="/login-success/:media/:jwt" component={LoginSuccess} />
 
                                 <Route path="/my-polls" component={RequireAuth(MyPolls)} />
                                 <Route path="/polls/new" component={RequireAuth(NewPoll)} />
