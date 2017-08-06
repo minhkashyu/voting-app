@@ -13,10 +13,10 @@ const github = new GitHubStrategy({
                 if (err) {
                     return done(err);
                 }
-
                 if (user) {
                     return done(null, user);
-                } else {
+                }
+                else {
                     let newUser = new User();
 
                     newUser.github.id = profile.id;
@@ -27,9 +27,8 @@ const github = new GitHubStrategy({
 
                     newUser.save(err => {
                         if (err) {
-                            throw err;
+                            return done(err);
                         }
-
                         return done(null, newUser);
                     });
                 }

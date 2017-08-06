@@ -30,7 +30,7 @@ const facebook = new FacebookStrategy({
 
                     newUser.save(err => {
                         if (err) {
-                            throw err;
+                            return done(err);
                         }
                         return done(null, newUser);
                     });

@@ -99,11 +99,11 @@ export const renderSelect = ({ options, meta: { touched, error, warning } }) => 
     </div>
 );
 
-export const validate = values => {
+export const validateVoteForm = values => {
     const errors = {};
-    console.log(values.options);
     let min = 2;
     let max = 100;
+
     if(!values.options) {
         errors.options = "Please select an option to vote for..."
     }
@@ -121,5 +121,36 @@ export const validate = values => {
             errors.customOption = undefined;
         }
     }
+    return errors;
+};
+
+
+export const validateResetPassword = (formProps) => {
+    const errors = {};
+    let min = 6;
+    let max = 100;
+
+    if (!formProps.password) {
+        errors.password = 'Please enter a new password';
+    }
+    else {
+        if (formProps.password.length < min) {
+            errors.password = `Must be ${min} characters or more`;
+        }
+        else if (formProps.password.length > max) {
+            errors.password = `Must be ${max} characters or less`;
+        }
+        else {
+            errors.password = undefined;
+        }
+    }
+    if (!formProps.passwordConfirm) {
+        errors.passwordConfirm = 'Please confirm new password';
+    }
+
+    if (formProps.password !== formProps.passwordConfirm) {
+        errors.passwordConfirm = 'Passwords must match';
+    }
+
     return errors;
 };

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { PropTypes } from 'prop-types';
 
-import { renderField, renderSelect, validate } from './../template/formValidation.jsx';
+import { renderField, renderSelect, validateVoteForm } from './../template/formValidation.jsx';
+const validate = validateVoteForm;
 
 class VoteForm extends React.Component {
 

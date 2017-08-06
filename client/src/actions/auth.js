@@ -8,8 +8,8 @@ import {
     NOT_FETCHING,
     AUTH_USER,
     UNAUTH_USER,
-    FORGOT_PASSWORD_REQUEST,
-    RESET_PASSWORD_REQUEST,
+    FORGOT_PASSWORD,
+    RESET_PASSWORD,
     AUTH_ERROR
     } from './types';
 
@@ -111,7 +111,7 @@ export function getForgotPasswordToken({ email }) {
         axios.post(`${API_URL}/auth/forgot-password`, { email })
             .then((response) => {
                 dispatch({
-                    type: FORGOT_PASSWORD_REQUEST,
+                    type: FORGOT_PASSWORD,
                     payload: response.data
                 });
                 dispatch({ type: NOT_FETCHING });
@@ -128,7 +128,7 @@ export function resetPassword(token, { password }) {
         axios.post(`${API_URL}/auth/reset-password/${token}`, { password })
             .then((response) => {
                 dispatch({
-                    type: RESET_PASSWORD_REQUEST,
+                    type: RESET_PASSWORD,
                     payload: response.data
                 });
                 dispatch({ type: NOT_FETCHING });

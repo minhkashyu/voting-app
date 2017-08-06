@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import User from './../models/user';
 import config from './../config/main';
+import passport from './../config/passport';
 
 import { setLocalUserInfo, setFacebookInfo, setTwitterInfo, setGoogleInfo, getRole } from '../helpers';
 
@@ -11,61 +12,90 @@ const generateToken = user => {
     });
 };
 
+export const requireAuth = passport.authenticate('jwt', { session: false });
+
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
 // =============================================================================
 
-export function register(req, res, next) {
-    const userInfo = setLocalUserInfo(req.user);
+export const register = (req, res, next) => passport.authenticate('register', { session: false }, (err, user, info) => {
+    if (err) {
+        return res.status(400).json({ error: err });
+    }
+    if (!user) {
+        return res.status(404).json({ error: info });
+    }
+    const userInfo = setLocalUserInfo(user);
 
     res.status(201).json({
         token: `JWT ${generateToken(userInfo)}`,
         user: userInfo
     });
-}
+})(req, res, next);
 
-export function login(req, res, next) {
-    const userInfo = setLocalUserInfo(req.user);
-
-    res.status(200).json({
-        token: `JWT ${generateToken(userInfo)}`,
-        user: userInfo
-    });
-}
-
-export function facebook(req, res, next) {
-    const userInfo = setFacebookInfo(req.user);
+export const login = (req, res, next) => passport.authenticate('login', { session: false }, (err, user, info) => {
+    if (err) {
+        return res.status(400).json({ error: err });
+    }
+    if (!user) {
+        return res.status(404).json({ error: info });
+    }
+    const userInfo = setLocalUserInfo(user);
 
     res.status(200).json({
         token: `JWT ${generateToken(userInfo)}`,
         user: userInfo
     });
-}
+})(req, res, next);
 
-export function twitter(req, res, next) {
-    const userInfo = setTwitterInfo(req.user);
-
-    res.status(200).json({
-        token: `JWT ${generateToken(userInfo)}`,
-        user: userInfo
-    });
-}
-
-export function google(req, res, next) {
-    const userInfo = setGoogleInfo(req.user);
+export const facebookLogin = passport.authenticate('facebook', { scope : 'email', session: false });
+export const facebookLoginCb = (req, res, next) => passport.authenticate('facebook', { session: false }, (err, user, info) => {
+    if (err) {
+        return res.status(400).json({ error: err });
+    }
+    if (!user) {
+        return res.status(404).json({ error: info });
+    }
+    const userInfo = setFacebookInfo(user);
 
     res.status(200).json({
         token: `JWT ${generateToken(userInfo)}`,
         user: userInfo
     });
-}
+})(req, res, next);
+
+//export const twitterLogin = passport.authenticate('twitter', { session: false });
+//export const twitter = (req, res, next) => {
+//    const userInfo = setTwitterInfo(req.user);
+//
+//    res.status(200).json({
+//        token: `JWT ${generateToken(userInfo)}`,
+//        user: userInfo
+//    });
+//};
+
+export const googleLogin = passport.authenticate('google', { scope : ['profile', 'email'], session: false });
+export const googleLoginCb = (req, res, next) => passport.authenticate('google', { session: false }, (err, user, info) => {
+    if (err) {
+        return res.status(400).json({ error: err });
+    }
+    if (!user) {
+        return res.status(404).json({ error: info });
+    }
+    const userInfo = setGoogleInfo(user);
+
+    res.status(200).json({
+        token: `JWT ${generateToken(userInfo)}`,
+        user: userInfo
+    });
+})(req, res, next);
 
 //= =======================================
 // Authorization Middleware
 //= =======================================
 
-export function roleAuthorization(requiredRole) {
-    return function (req, res, next) {
+export const roleAuthorization = (requiredRole) => {
+    return (req, res, next) => {
         const user = req.user;
 
         User.findById(user._id, (err, foundUser) => {
@@ -81,13 +111,13 @@ export function roleAuthorization(requiredRole) {
             return res.status(401).json({ error: 'You are not authorized to view this content.' });
         });
     };
-}
+};
 
 //= =======================================
 // Forgot Password Route
 //= =======================================
 
-export function forgotPassword(req, res, next) {
+export const forgotPassword = (req, res, next) => {
     const email = req.body.email;
 
     User.findOne({ 'local.email': email }, (err, existingUser) => {
@@ -128,13 +158,13 @@ export function forgotPassword(req, res, next) {
             });
         });
     });
-}
+};
 
 //= =======================================
 // Reset Password Route
 //= =======================================
 
-export function verifyToken(req, res, next) {
+export const verifyToken = (req, res, next) => {
     User.findOne({
             'local.resetPasswordToken': req.params.token,
             'local.resetPasswordExpires': { $gt: Date.now() }
@@ -147,7 +177,12 @@ export function verifyToken(req, res, next) {
                 res.status(422).json({ error: 'Your token has expired. Please reset your password again.' });
             }
 
-            resetUser.local.password = req.body.password;
+            resetUser.generateHash(req.body.password, (error, hash) => {
+                if (error) {
+                    return next(error);
+                }
+                resetUser.local.password = hash;
+            });
             resetUser.local.resetPasswordToken = undefined;
             resetUser.local.resetPasswordExpires = undefined;
 
@@ -163,8 +198,8 @@ export function verifyToken(req, res, next) {
                 };
                 // TODO: add email service
 
-                return res.status(200).json({ message: 'Password changed successfully. Please login with your new password.' });
+                return res.status(200).json({ message: 'Password is changed successfully. Please login with your new password.' });
             });
         }
     );
-}
+};

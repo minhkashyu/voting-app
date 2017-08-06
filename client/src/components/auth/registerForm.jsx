@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 
 import { required, maxLength100, minLength2, minLength6, email, renderField, alphaNumeric } from './../template/formValidation.jsx';
 
-const form = reduxForm({
-    form: 'register'
-});
-
 class RegisterForm extends Component {
     render() {
         const { handleSubmit, pristine, reset, submitting, onSubmitRegister } = this.props;
@@ -53,5 +49,9 @@ class RegisterForm extends Component {
 RegisterForm.propTypes = {
     onSubmitRegister: PropTypes.func.isRequired
 };
+
+const form = reduxForm({
+    form: 'register'
+});
 
 export default form(RegisterForm);

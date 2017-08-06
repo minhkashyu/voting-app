@@ -15,14 +15,12 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
     process.nextTick(() => {
         User.findById(payload.id, (err, user) => {
             if (err) {
-                return done(err, false);
+                return done(err);
             }
-
-            if (user) {
-                done(null, user);
-            } else {
-                done(null, false);
+            if (!user) {
+                return done(null, false, { error: 'There is no user information to create token'});
             }
+            return done(null, user)
         });
     });
 });

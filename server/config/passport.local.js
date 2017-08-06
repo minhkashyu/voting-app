@@ -11,17 +11,17 @@ export const register = new LocalStrategy({
         process.nextTick(() => {
             // Return error if full name not provided
             if (!req.body.firstName || !req.body.lastName) {
-                return done(null, false, { error: 'You must enter your full name.'});
+                return done(null, false, 'You must enter your full name.');
             }
 
             // Return error if no email provided
             if (!req.body.email) {
-                return done(null, false, { error: 'You must enter an email address.'});
+                return done(null, false, 'You must enter an email address.');
             }
 
             // Return error if no password provided
             if (!req.body.password) {
-                return done(null, false, { error: 'You must enter a password.' });
+                return done(null, false, 'You must enter a password.');
             }
 
             User.findOne({ 'local.email':  req.body.email }, (err, user) => {
@@ -29,7 +29,7 @@ export const register = new LocalStrategy({
                     return done(err);
                 }
                 if (user) {
-                    return done(null, false, { error: 'The email address is already taken. Please use a different one.'});
+                    return done(null, false, 'The email address is already taken. Please use a different one.');
                 }
                 else {
                     let newUser = new User();
@@ -64,29 +64,22 @@ export const login = new LocalStrategy({
     },
     (req, email, password, done) => {
         process.nextTick(() => {
-            // Return error if no email provided
             if (!email) {
-                return done(null, false, { error: 'You must enter an email address.'});
+                return done(null, false, 'You must enter an email address.');
             }
-
-            // Return error if no password provided
             if (!password) {
-                return done(null, false, { error: 'You must enter a password.' });
+                return done(null, false, 'You must enter a password.');
             }
-
             User.findOne({ 'local.email' :  email }, (err, user) => {
                 if (err) {
                     return done(err);
                 }
                 if (!user) {
-                    return done(null, false, { error: 'Your login details could not be verified. Please try again.'});
+                    return done(null, false, 'Your login details could not be verified. Please try again.');
                 }
                 user.comparePassword(password, user.local.password, (error, isMatch) => {
-                    if (error) {
-                        return done(error);
-                    }
-                    if (!isMatch) {
-                        return done(null, false, { error: "Your login details are not correct." });
+                    if (error || !isMatch) {
+                        return done(null, false, 'Either email or password is not correct.');
                     }
                     return done(null, user);
                 });

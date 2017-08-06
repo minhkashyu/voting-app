@@ -6,10 +6,6 @@ import { Field, reduxForm } from 'redux-form';
 import { required, email, maxLength100, renderField } from './../template/formValidation.jsx';
 import { getForgotPasswordToken } from './../../actions/auth';
 
-const form = reduxForm({
-    form: 'forgotPassword'
-});
-
 class ForgotPassword extends Component {
 
     renderAlert() {
@@ -32,7 +28,7 @@ class ForgotPassword extends Component {
                 }}/>
             );
         }
-        if (message.length > 0) {
+        if (message) {
             return <p className="text-center">{message}</p>
         }
 
@@ -59,5 +55,9 @@ function mapStateToProps(state) {
         isAuthenticated: state.auth.isAuthenticated
     };
 }
+
+const form = reduxForm({
+    form: 'forgotPassword'
+});
 
 export default connect(mapStateToProps, { getForgotPasswordToken })(form(ForgotPassword));

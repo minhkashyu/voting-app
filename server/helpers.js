@@ -1,45 +1,41 @@
 import { ROLE_MEMBER, ROLE_ADMIN } from './constants';
 
-// Set user info from request
-export function setLocalUserInfo(request) {
+export function setLocalUserInfo(user) {
     return {
-        id: request.id,
-        name: `${request.local.firstName} ${request.local.lastName}`,
-        email: request.local.email,
-        role: request.role
+        id: user.id,
+        name: `${user.local.firstName} ${user.local.lastName}`,
+        email: user.local.email,
+        role: user.role
     };
 }
 
-// Set facebook user info from request
-export function setFacebookInfo(request) {
+export function setFacebookInfo(user) {
     return {
-        id      : request.id,
-        token   : request.facebook.token,
-        name    : request.facebook.name,
-        email   : request.facebook.email,
-        role    : request.role
+        id      : user.id,
+        token   : user.facebook.token,
+        name    : user.facebook.name,
+        email   : user.facebook.email,
+        role    : user.role
     };
 }
 
-// Set twitter user info from request
-export function setTwitterInfo(request) {
+export function setTwitterInfo(user) {
     return {
-        id          : request.id,
-        token       : request.twitter.token,
-        username    : request.twitter.username,
-        name        : request.twitter.displayName,
-        role        : request.role
+        id          : user.id,
+        token       : user.twitter.token,
+        username    : user.twitter.username,
+        name        : user.twitter.displayName,
+        role        : user.role
     };
 }
 
-// Set google user info from request
-export function setGoogleInfo(request) {
+export function setGoogleInfo(user) {
     return {
-        id      : request.id,
-        token   : request.google.token,
-        name    : request.google.name,
-        email   : request.google.email,
-        role    : request.role
+        id      : user.id,
+        token   : user.google.token,
+        name    : user.google.name,
+        email   : user.google.email,
+        role    : user.role
     };
 }
 

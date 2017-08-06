@@ -12,8 +12,8 @@ class Login extends Component {
     renderAlert() {
         if (this.props.errorMessage) {
             return (
-                <div>
-                    <span><strong>Error!</strong> {this.props.errorMessage}</span>
+                <div className="alert alert-danger">
+                    <strong>Error</strong>&nbsp;&nbsp;{this.props.errorMessage}
                 </div>
             );
         }
@@ -34,8 +34,8 @@ class Login extends Component {
         }
         return (
             <div>
-                <LoginForm onSubmitLogin={loginUser} />
                 {this.renderAlert()}
+                <LoginForm onSubmitLogin={loginUser} />
                 <div className="mt-divider"></div>
                 <LoginMedia onLoginFacebook={loginFacebook} onLoginGoogle ={loginGoogle} />
             </div>
