@@ -144,7 +144,7 @@ a {
 
 .chart {
   width: 100%;
-  min-height: 450px; }
+  min-height: 500px; }
 
 .chart rect {
   fill-opacity: 0; }
