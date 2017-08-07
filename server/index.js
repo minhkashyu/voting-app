@@ -9,6 +9,11 @@ const app = express();
 const config = require('./config/main');
 const router = require('./routes/index');
 
+// Express only serves static assets in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('build'));
+}
+
 // Database Connection
 mongoose.connect(config.database, {
     useMongoClient: true
