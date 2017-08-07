@@ -92,5 +92,5 @@ module.exports = (app) => {
     //submitVote()
     apiRoutes.post('/polls/:pollId/options/:optionId/vote', submitVote);
     //submitVote(data)
-    apiRoutes.post('/polls/:pollId/options', voteNewOption);
+    apiRoutes.post('/polls/:pollId/options', requireAuth, voteNewOption);
 };

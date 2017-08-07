@@ -43,10 +43,10 @@ class ViewPoll extends Component {
     }
 
     renderForm() {
-        const { poll } = this.props;
+        const { poll, isAuthenticated } = this.props;
         if(poll.options && poll.options.length > 0) {
             return (
-                <VoteForm options={poll.options} onSubmitVote={this.onSubmitVote.bind(this)} />
+                <VoteForm options={poll.options} onSubmitVote={this.onSubmitVote.bind(this)} isAuthenticated={isAuthenticated} />
             );
         }
     }
@@ -72,7 +72,8 @@ function mapStateToProps(state) {
         errorMessage: state.polling.error,
         message: state.polling.message,
         poll: state.polling.poll,
-        isFetching: state.main.isFetching
+        isFetching: state.main.isFetching,
+        isAuthenticated: state.auth.isAuthenticated
     };
 }
 

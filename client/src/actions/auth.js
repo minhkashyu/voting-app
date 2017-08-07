@@ -87,14 +87,6 @@ export function loginFacebook() {
     return function (dispatch, getState, cookies) {
         dispatch({ type: FETCHING });
         window.location = `${API_URL}/auth/facebook`;
-        //dispatch({ type: FETCHING });
-        //axios.get(`${API_URL}/auth/facebook`)
-        //    .then((response) => {
-        //        handleSuccess(dispatch, cookies, response);
-        //    })
-        //    .catch((error) => {
-        //        errorHandler(dispatch, error, AUTH_ERROR);
-        //    });
     };
 }
 
@@ -102,14 +94,6 @@ export function loginGoogle() {
     return function (dispatch, getState, cookies) {
         dispatch({ type: FETCHING });
         window.location = `${API_URL}/auth/google`;
-        //dispatch({ type: FETCHING });
-        //axios.get(`${API_URL}/auth/google`)
-        //    .then((response) => {
-        //        handleSuccess(dispatch, cookies, response);
-        //    })
-        //    .catch((error) => {
-        //        errorHandler(dispatch, error, AUTH_ERROR);
-        //    });
     };
 }
 

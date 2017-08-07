@@ -88,12 +88,12 @@ export const renderOptions = ({ fields, meta: { touched, error, warning } }) => 
     </div>
 );
 
-export const renderSelect = ({ options, meta: { touched, error, warning } }) => (
+export const renderSelect = ({ options, isAuthenticated, meta: { touched, error, warning } }) => (
     <div className="form-group">
         <Field name="options" component="select" className="form-control">
             <option value="">Please select an option to vote for...</option>
             {options.map(option => <option key={option._id} value={option._id}>{option.name}</option>)}
-            <option value="custom">I'd like my own option</option>
+            {isAuthenticated && <option value="custom">I'd like my own option</option>}
         </Field>
         {touched && ((error && <span className="help-block">{error}</span>) || (warning && <span className="help-block">{warning}</span>))}
     </div>

@@ -55,7 +55,7 @@ export function deletePoll(id) {
 export function submitVote(pollId, optionId, blAdd) {
     let url = blAdd ? `/polls/${pollId}/options` : `/polls/${pollId}/options/${optionId}/vote`;
     let data = blAdd ? { name: optionId } : {};
-    return (dispatch, getState, cookies) => postRequest(SUBMIT_VOTE, POLL_ERROR, false, false, url, dispatch, cookies, data);
+    return (dispatch, getState, cookies) => postRequest(SUBMIT_VOTE, POLL_ERROR, blAdd, false, url, dispatch, cookies, data);
 }
 
 export function addOption(data) {

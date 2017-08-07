@@ -10,15 +10,16 @@ class VoteForm extends React.Component {
 
     static propTypes = {
         onSubmitVote: PropTypes.func.isRequired,
-        options: PropTypes.array.isRequired
+        options: PropTypes.array.isRequired,
+        isAuthenticated: PropTypes.bool.isRequired
     };
 
     render() {
-        const { handleSubmit, pristine, submitting, onSubmitVote, options, optionValue } = this.props;
+        const { handleSubmit, pristine, submitting, onSubmitVote, options, optionValue, isAuthenticated } = this.props;
         return (
             <form onSubmit={handleSubmit(onSubmitVote)}>
-                <Field name="options" options={options} component={renderSelect} />
-                {optionValue === 'custom' &&
+                <Field name="options" options={options} component={renderSelect} isAuthenticated={isAuthenticated} />
+                {optionValue === 'custom' && isAuthenticated &&
                     <Field
                     name="customOption"
                     type="text"
