@@ -45,7 +45,6 @@ const handleSuccess = (dispatch, cookies, response) => {
 export function loginSuccess( media, jwt ) {
     return function (dispatch, getState, cookies) {
         dispatch({ type: FETCHING });
-        console.log(`Authorization: ${jwt}, Media: ${media}`);
         const headers = { headers: { Authorization: jwt, Media: media} };
         axios.get(`${API_URL}/auth/loginSuccess`, headers)
             .then((response) => {
