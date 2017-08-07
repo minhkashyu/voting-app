@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchSinglePoll, submitVote } from './../../actions/polling';
+import { fetchSinglePoll, submitVote, deletePoll } from './../../actions/polling';
 import VoteForm from './voteForm.jsx';
 import Loading from './../template/loading.jsx';
 
@@ -20,6 +21,12 @@ class ViewPoll extends Component {
             blAdd = true;
         }
         this.props.submitVote(this.props.match.params.pollId, optionId, blAdd);
+    }
+
+    handleClick(e) {
+        const { match, deletePoll } = this.props;
+        e.preventDefault();
+        deletePoll(match.params.pollId);
     }
 
     renderError() {
@@ -51,13 +58,29 @@ class ViewPoll extends Component {
         }
     }
 
+    renderDeletePoll() {
+        if (this.props.isAuthenticated) {
+            return <button type="button" className="btn btn-danger" onClick={(e) => this.handleClick(e)}>Delete This Poll</button>;
+        }
+    }
+
     render() {
-        if (this.props.isFetching) {
+        const { isRedirected, location, isFetching, poll } = this.props;
+        if (isRedirected) {
+            return (
+                <Redirect to={{
+                    pathname: '/',
+                    state: { from: location }
+                }}/>
+            );
+        }
+        if (isFetching) {
             return <Loading />;
         }
         return (
             <div>
-                <h3>{this.props.poll.title}</h3>
+                <h3>{poll.title}</h3>
+                {this.renderDeletePoll()}
                 <h4>I'd like to vote for</h4>
                 {this.renderForm()}
                 {this.renderError()}
@@ -73,8 +96,9 @@ function mapStateToProps(state) {
         message: state.polling.message,
         poll: state.polling.poll,
         isFetching: state.main.isFetching,
-        isAuthenticated: state.auth.isAuthenticated
+        isAuthenticated: state.auth.isAuthenticated,
+        isRedirected: state.main.isRedirected
     };
 }
 
-export default connect(mapStateToProps, { fetchSinglePoll, submitVote })(ViewPoll);
+export default connect(mapStateToProps, { fetchSinglePoll, submitVote, deletePoll })(ViewPoll);

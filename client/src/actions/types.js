@@ -24,5 +24,4 @@ export const RECEIVE_POLLS = 'receive_polls',
     SUBMIT_VOTE = 'submit_vote',
     ADD_POLL = 'add_poll',
     DELETE_POLL = 'remove_poll',
-    ADD_OPTION = 'add_option',
     POLL_ERROR = 'poll_error';

@@ -86,6 +86,30 @@ export function addPoll(req, res, next) {
     });
 }
 
+export function deletePoll(req, res, next) {
+    let pollId = req.params.pollId;
+    if (!pollId) {
+        res.status(422).send({ error: 'Poll ID is needed.' });
+        return next();
+    }
+
+    Poll.findOne({ _id: pollId })
+        .exec((err, poll) => {
+            if (err) {
+                res.send({ error: err });
+                return next(err);
+            }
+
+            poll.remove((err) => {
+                if (err) {
+                    res.send({ error: err });
+                    return next(err);
+                }
+                return res.status(200).json({ message: 'The poll deleted successfully.'});
+            });
+        });
+}
+
 export function submitVote(req, res, next) {
     let pollId = req.params.pollId;
     let optionId = req.params.optionId;

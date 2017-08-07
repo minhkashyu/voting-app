@@ -16,6 +16,7 @@ import {
     fetchMyPolls,
     fetchSinglePoll,
     addPoll,
+    deletePoll,
     submitVote,
     voteNewOption
     } from './../controllers/polling';
@@ -85,10 +86,7 @@ module.exports = (app) => {
     //addPoll(data)
     apiRoutes.post('/polls', requireAuth, addPoll);
     //deletePoll()
-    apiRoutes.delete(`/polls/:pollId`, (req, res) => {
-        let pollId = req.params.pollId;
-        res.send({ content: 'Delete a poll' });
-    });
+    apiRoutes.delete(`/polls/:pollId`, requireAuth, deletePoll);
     //submitVote()
     apiRoutes.post('/polls/:pollId/options/:optionId/vote', submitVote);
     //submitVote(data)

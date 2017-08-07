@@ -13,7 +13,6 @@ import {
     SUBMIT_VOTE,
     ADD_POLL,
     DELETE_POLL,
-    ADD_OPTION,
     POLL_ERROR
 } from './types';
 
@@ -49,16 +48,11 @@ export function addPoll(data) {
 
 export function deletePoll(id) {
     let url = `/polls/${id}`;
-    //return (dispatch, getState, cookies) => deleteRequest(DELETE_POLL, POLL_ERROR, true, false, url, dispatch, cookies);
+    return (dispatch, getState, cookies) => deleteRequest(DELETE_POLL, POLL_ERROR, true, true, url, dispatch, cookies);
 }
 
 export function submitVote(pollId, optionId, blAdd) {
     let url = blAdd ? `/polls/${pollId}/options` : `/polls/${pollId}/options/${optionId}/vote`;
     let data = blAdd ? { name: optionId } : {};
     return (dispatch, getState, cookies) => postRequest(SUBMIT_VOTE, POLL_ERROR, blAdd, false, url, dispatch, cookies, data);
-}
-
-export function addOption(data) {
-    const url = `/options`;
-    return (dispatch, getState, cookies) => postRequest(ADD_OPTION, POLL_ERROR, true, false, url, dispatch, cookies, data);
 }

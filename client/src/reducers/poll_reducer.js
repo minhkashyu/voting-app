@@ -5,7 +5,6 @@ import {
     SUBMIT_VOTE,
     ADD_POLL,
     DELETE_POLL,
-    ADD_OPTION,
     POLL_ERROR
 } from './../actions/types';
 
@@ -32,8 +31,6 @@ const pollReducer = (state = INITIAL_STATE, action) => {
         case ADD_POLL:
             return {...state, message: action.payload.message, poll: action.payload.poll, error: ''};
         case DELETE_POLL:
-            return {...state, message: action.payload.message, error: ''};
-        case ADD_OPTION:
             return {...state, message: action.payload.message, error: ''};
         case POLL_ERROR:
             return {...state, error: action.payload, message: ''};
