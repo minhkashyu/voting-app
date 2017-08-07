@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
+import path from 'path';
 require('dotenv').config({ silent: true });
 
 const app = express();
@@ -11,7 +12,7 @@ const router = require('./routes/index');
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('build'));
+    app.use(express.static(path.resolve(__dirname, '../client/build')));
 }
 
 // Database Connection
@@ -37,6 +38,10 @@ app.use((req, res, next) => {
 
 // Import routes to be served
 router(app);
+
+app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 
 app.listen(config.port, err => {
     if (err) {
