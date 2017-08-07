@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { fetchSinglePoll, submitVote, deletePoll } from './../../actions/polling';
 import VoteForm from './voteForm.jsx';
 import Loading from './../template/loading.jsx';
+import ShareSocialMedia from './../template/shareSocialMedia.jsx';
 
 class ViewPoll extends Component {
 
@@ -26,7 +27,9 @@ class ViewPoll extends Component {
     handleClick(e) {
         const { match, deletePoll } = this.props;
         e.preventDefault();
-        deletePoll(match.params.pollId);
+        if (window.confirm('Are you sure to delete this poll?')) {
+            deletePoll(match.params.pollId);
+        }
     }
 
     renderError() {
@@ -60,7 +63,17 @@ class ViewPoll extends Component {
 
     renderDeletePoll() {
         if (this.props.isAuthenticated) {
-            return <button type="button" className="btn btn-danger" onClick={(e) => this.handleClick(e)}>Delete This Poll</button>;
+            return (
+                <button type="button" className="btn btn-link btn-delete" onClick={(e) => this.handleClick(e)} title="Delete this poll">
+                    <span className="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
+                </button>
+            );
+        }
+    }
+
+    renderSocialMedia() {
+        if (this.props.isAuthenticated) {
+            return <ShareSocialMedia />
         }
     }
 
@@ -79,12 +92,12 @@ class ViewPoll extends Component {
         }
         return (
             <div>
-                <h3>{poll.title}</h3>
-                {this.renderDeletePoll()}
+                <h3>{poll.title}&nbsp;&nbsp;{this.renderDeletePoll()}</h3>
                 <h4>I'd like to vote for</h4>
                 {this.renderForm()}
                 {this.renderError()}
                 {this.renderMessage()}
+                {this.renderSocialMedia()}
             </div>
         );
     }

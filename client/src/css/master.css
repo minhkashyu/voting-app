@@ -65,6 +65,31 @@ a {
     border: 0 none;
     color: white; }
 
+.btn-link {
+  margin: 0;
+  background: transparent;
+  border: 0 none;
+  text-decoration: none;
+  color: #125D84;
+  -webkit-transition: color 0.25s ease-in-out;
+  /* WebKit */
+  -moz-transition: color 0.25s ease-in-out;
+  /* Mozilla */
+  -o-transition: color 0.25s ease-in-out;
+  /* Opera */
+  transition: color 0.25s ease-in-out;
+  /* Generic */ }
+  .btn-link.focus, .btn-link:focus, .btn-link:hover {
+    background: transparent;
+    border: 0 none;
+    text-decoration: none;
+    color: #15A9C7; }
+
+.btn-delete {
+  color: #800000; }
+  .btn-delete.focus, .btn-delete:focus, .btn-delete:hover {
+    color: #CC0000; }
+
 .panel-changed {
   border-color: #54DBDF;
   background-color: white;
@@ -89,6 +114,33 @@ a {
 
 .error {
   color: #CC0000; }
+
+.social-media-sharing-buttons {
+  text-align: center;
+  /* Facebook */
+  /* Google+ */
+  /* Linkedin */
+  /* Twitter */ }
+  .social-media-sharing-buttons button > i.fa {
+    border-right: 2px solid white;
+    padding: 5px 10px 5px 0;
+    margin-right: 10px; }
+  .social-media-sharing-buttons .btn-facebook-share {
+    background-color: #2B4170; }
+    .social-media-sharing-buttons .btn-facebook-share.focus, .social-media-sharing-buttons .btn-facebook-share:focus, .social-media-sharing-buttons .btn-facebook-share:hover {
+      background-color: #3B5998; }
+  .social-media-sharing-buttons .btn-googleplus-share {
+    background-color: #C33219; }
+    .social-media-sharing-buttons .btn-googleplus-share.focus, .social-media-sharing-buttons .btn-googleplus-share:focus, .social-media-sharing-buttons .btn-googleplus-share:hover {
+      background-color: #E64522; }
+  .social-media-sharing-buttons .btn-linkedin-share {
+    background-color: #0073B2; }
+    .social-media-sharing-buttons .btn-linkedin-share.focus, .social-media-sharing-buttons .btn-linkedin-share:focus, .social-media-sharing-buttons .btn-linkedin-share:hover {
+      background-color: #009CDA; }
+  .social-media-sharing-buttons .btn-twitter-share {
+    background-color: #0081CE; }
+    .social-media-sharing-buttons .btn-twitter-share.focus, .social-media-sharing-buttons .btn-twitter-share:focus, .social-media-sharing-buttons .btn-twitter-share:hover {
+      background-color: #00ACED; }
 
 .navbar-changed .navbar-nav li a, .navbar-changed .navbar-nav li.open .dropdown-menu li a, .navbar-changed .navbar-nav li a:focus, .navbar-changed .navbar-nav li.open .dropdown-menu li a:focus, .navbar-changed .navbar-nav li a:hover, .navbar-changed .navbar-nav li.open .dropdown-menu li a:hover, .navbar-changed .navbar-nav li a.active, .navbar-changed .navbar-nav li.open .dropdown-menu li a.active, .navbar-changed .navbar-nav li button, .navbar-changed .navbar-nav li.open .dropdown-menu li button {
   background: transparent;

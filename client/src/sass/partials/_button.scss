@@ -25,3 +25,31 @@ a {
         color: white;
     }
 }
+
+.btn-link {
+    margin: 0;
+    background: transparent;
+    border: 0 none;
+    text-decoration: none;
+    color: $dark-ocean-blue;
+    @include transition(color .25s ease-in-out);
+
+    &.focus,
+    &:focus,
+    &:hover {
+        background: transparent;
+        border: 0 none;
+        text-decoration: none;
+        color: $mid-ocean-blue;
+    }
+}
+
+.btn-delete {
+    color: $dark-red;
+
+    &.focus,
+    &:focus,
+    &:hover {
+        color: $red;
+    }
+}
