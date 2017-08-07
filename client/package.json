@@ -5,7 +5,17 @@
     "dependencies": {
         "react": "^15.6.1",
         "react-dom": "^15.6.1",
-        "react-scripts": "1.0.10"
+        "react-scripts": "1.0.10",
+        "axios": "^0.16.2",
+        "node-sass-chokidar": "^0.0.3",
+        "npm-run-all": "^4.0.2",
+        "prop-types": "^15.5.10",
+        "react-cookie": "^2.0.8",
+        "react-redux": "^5.0.5",
+        "react-router-dom": "^4.1.2",
+        "redux": "^3.7.2",
+        "redux-form": "^7.0.1",
+        "redux-thunk": "^2.2.0"
     },
     "scripts": {
         "build-css": "node-sass-chokidar src/sass/ -o src/css/",
@@ -18,15 +28,5 @@
         "eject": "react-scripts eject"
     },
     "devDependencies": {
-        "axios": "^0.16.2",
-        "node-sass-chokidar": "^0.0.3",
-        "npm-run-all": "^4.0.2",
-        "prop-types": "^15.5.10",
-        "react-cookie": "^2.0.8",
-        "react-redux": "^5.0.5",
-        "react-router-dom": "^4.1.2",
-        "redux": "^3.7.2",
-        "redux-form": "^7.0.1",
-        "redux-thunk": "^2.2.0"
     }
 }

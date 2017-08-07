@@ -1,9 +1,8 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const logger = require('morgan');
-const mongoose = require('mongoose');
-const path = require('path');
+import express from 'express';
+import bodyParser from 'body-parser';
+import logger from 'morgan';
+import mongoose from 'mongoose';
+import path from 'path';
 require('dotenv').config({ silent: true });
 
 const app = express();
@@ -34,7 +33,6 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', 'true');
     next();
 });
-//app.use(cors());
 
 // Import routes to be served
 router(app);
