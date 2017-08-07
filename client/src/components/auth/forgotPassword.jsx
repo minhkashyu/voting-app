@@ -8,11 +8,11 @@ import { getForgotPasswordToken } from './../../actions/auth';
 
 class ForgotPassword extends Component {
 
-    renderAlert() {
+    renderError() {
         if (this.props.errorMessage) {
             return (
-                <div>
-                    <span><strong>Error!</strong> {this.props.errorMessage}</span>
+                <div className="alert alert-danger">
+                    <strong>Error</strong>&nbsp;&nbsp;{this.props.errorMessage}
                 </div>
             );
         }
@@ -34,7 +34,7 @@ class ForgotPassword extends Component {
 
         return (
             <form onSubmit={handleSubmit(getForgotPasswordToken)}>
-                {this.renderAlert()}
+                {this.renderError()}
                 <Field
                 name="email"
                 type="email"

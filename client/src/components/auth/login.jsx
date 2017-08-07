@@ -9,7 +9,7 @@ import Loading from './../template/loading.jsx';
 
 class Login extends Component {
 
-    renderAlert() {
+    renderError() {
         if (this.props.errorMessage) {
             return (
                 <div className="alert alert-danger">
@@ -34,7 +34,7 @@ class Login extends Component {
         }
         return (
             <div>
-                {this.renderAlert()}
+                {this.renderError()}
                 <LoginForm onSubmitLogin={loginUser} />
                 <div className="mt-divider"></div>
                 <LoginMedia onLoginFacebook={loginFacebook} onLoginGoogle ={loginGoogle} />

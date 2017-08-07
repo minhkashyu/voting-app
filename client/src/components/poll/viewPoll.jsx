@@ -12,11 +12,41 @@ class ViewPoll extends Component {
         fetchSinglePoll(match.params.pollId);
     }
 
+    onSubmitVote(formprops) {
+        let optionId = formprops.options,
+            blAdd = false;
+        if (formprops.options === 'custom') {
+            optionId = formprops.customOption;
+            blAdd = true;
+        }
+        this.props.submitVote(this.props.match.params.pollId, optionId, blAdd);
+    }
+
+    renderError() {
+        if (this.props.errorMessage) {
+            return (
+                <div className="alert alert-danger">
+                    <strong>Error</strong>&nbsp;&nbsp;{this.props.errorMessage}
+                </div>
+            );
+        }
+    }
+
+    renderMessage() {
+        if (this.props.message) {
+            return (
+                <div className="alert alert-success">
+                    <strong>Success!</strong>&nbsp;&nbsp;{ this.props.message }
+                </div>
+            );
+        }
+    }
+
     renderForm() {
-        const { poll, submitVote } = this.props;
+        const { poll } = this.props;
         if(poll.options && poll.options.length > 0) {
             return (
-                <VoteForm options={poll.options} onSubmitVote={submitVote} />
+                <VoteForm options={poll.options} onSubmitVote={this.onSubmitVote.bind(this)} />
             );
         }
     }
@@ -30,6 +60,8 @@ class ViewPoll extends Component {
                 <h3>{this.props.poll.title}</h3>
                 <h4>I'd like to vote for</h4>
                 {this.renderForm()}
+                {this.renderError()}
+                {this.renderMessage()}
             </div>
         );
     }
@@ -37,6 +69,8 @@ class ViewPoll extends Component {
 
 function mapStateToProps(state) {
     return {
+        errorMessage: state.polling.error,
+        message: state.polling.message,
         poll: state.polling.poll,
         isFetching: state.main.isFetching
     };

@@ -15,7 +15,9 @@ import {
     fetchPolls,
     fetchMyPolls,
     fetchSinglePoll,
-    addPoll
+    addPoll,
+    submitVote,
+    voteNewOption
     } from './../controllers/polling';
 
 // use session for passport
@@ -88,13 +90,7 @@ module.exports = (app) => {
         res.send({ content: 'Delete a poll' });
     });
     //submitVote()
-    apiRoutes.post('/polls/:pollId/options/:optionId/vote', (req, res) => {
-        let pollId = req.params.pollId;
-        let optionId = req.params.optionId;
-        res.send({ content: 'Submit a vote' });
-    });
-    //addOption()
-    apiRoutes.post('/options', (req, res) => {
-        res.send({ content: 'Add an option' });
-    });
+    apiRoutes.post('/polls/:pollId/options/:optionId/vote', submitVote);
+    //submitVote(data)
+    apiRoutes.post('/polls/:pollId/options', voteNewOption);
 };

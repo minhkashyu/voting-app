@@ -9,11 +9,11 @@ import Loading from './../template/loading.jsx';
 
 class Register extends Component {
 
-    renderAlert() {
+    renderError() {
         if (this.props.errorMessage) {
             return (
                 <div className="alert alert-danger">
-                    <strong>Error</strong>&nbsp;&nbsp;&nbsp;{this.props.errorMessage}
+                    <strong>Error</strong>&nbsp;&nbsp;{this.props.errorMessage}
                 </div>
             );
         }
@@ -34,7 +34,7 @@ class Register extends Component {
         }
         return (
             <div>
-                {this.renderAlert()}
+                {this.renderError()}
                 <RegisterForm onSubmitRegister={registerUser} />
                 <div className="mt-divider"></div>
                 <LoginMedia onLoginFacebook={loginFacebook} onLoginGoogle ={loginGoogle} />

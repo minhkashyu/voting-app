@@ -16,11 +16,11 @@ class ResetPassword extends Component {
         resetPassword(resetToken, { password });
     }
 
-    renderAlert() {
+    renderError() {
         if (this.props.errorMessage) {
             return (
                 <div className="alert alert-danger">
-                    <strong>Error</strong>&nbsp;&nbsp;&nbsp;{this.props.errorMessage}
+                    <strong>Error</strong>&nbsp;&nbsp;{this.props.errorMessage}
                 </div>
             );
         }
@@ -42,7 +42,7 @@ class ResetPassword extends Component {
 
         return (
             <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-                {this.renderAlert()}
+                {this.renderError()}
                 <Field
                 name="password"
                 type="password"
