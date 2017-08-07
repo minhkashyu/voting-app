@@ -48,7 +48,7 @@ export function addPoll(data) {
 
 export function deletePoll(id) {
     let url = `/polls/${id}`;
-    return (dispatch, getState, cookies) => deleteRequest(DELETE_POLL, POLL_ERROR, true, true, url, dispatch, cookies);
+    return (dispatch, getState, cookies) => deleteRequest(DELETE_POLL, POLL_ERROR, true, false, url, dispatch, cookies);
 }
 
 export function submitVote(pollId, optionId, blAdd) {

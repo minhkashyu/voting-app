@@ -31,7 +31,7 @@ const pollReducer = (state = INITIAL_STATE, action) => {
         case ADD_POLL:
             return {...state, message: action.payload.message, poll: action.payload.poll, error: ''};
         case DELETE_POLL:
-            return {...state, message: action.payload.message, error: ''};
+            return {...state, message: action.payload.message, poll: {}, error: ''};
         case POLL_ERROR:
             return {...state, error: action.payload, message: ''};
     }

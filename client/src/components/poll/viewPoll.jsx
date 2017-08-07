@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { withCookies, Cookies } from 'react-cookie';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { fetchSinglePoll, submitVote, deletePoll } from './../../actions/polling';
@@ -9,7 +11,12 @@ import ShareSocialMedia from './../template/shareSocialMedia.jsx';
 
 class ViewPoll extends Component {
 
-    componentDidMount() {
+    static propTypes = {
+        cookies: PropTypes.instanceOf(Cookies).isRequired
+    };
+
+    constructor(props) {
+        super(props);
         const { match, fetchSinglePoll } = this.props;
         fetchSinglePoll(match.params.pollId);
     }
@@ -62,7 +69,8 @@ class ViewPoll extends Component {
     }
 
     renderDeletePoll() {
-        if (this.props.isAuthenticated) {
+        const { poll, isAuthenticated, cookies } = this.props;
+        if (isAuthenticated && (poll.author === cookies.get('user').id)) {
             return (
                 <button type="button" className="btn btn-link btn-delete" onClick={(e) => this.handleClick(e)} title="Delete this poll">
                     <span className="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
@@ -78,8 +86,8 @@ class ViewPoll extends Component {
     }
 
     render() {
-        const { isRedirected, location, isFetching, poll } = this.props;
-        if (isRedirected) {
+        const { location, isFetching, poll } = this.props;
+        if (Object.getOwnPropertyNames(poll).length === 0) {
             return (
                 <Redirect to={{
                     pathname: '/',
@@ -109,9 +117,8 @@ function mapStateToProps(state) {
         message: state.polling.message,
         poll: state.polling.poll,
         isFetching: state.main.isFetching,
-        isAuthenticated: state.auth.isAuthenticated,
-        isRedirected: state.main.isRedirected
+        isAuthenticated: state.auth.isAuthenticated
     };
 }
 
-export default connect(mapStateToProps, { fetchSinglePoll, submitVote, deletePoll })(ViewPoll);
+export default withCookies(connect(mapStateToProps, { fetchSinglePoll, submitVote, deletePoll })(ViewPoll));
