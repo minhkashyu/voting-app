@@ -39,9 +39,11 @@ app.use((req, res, next) => {
 // Import routes to be served
 router(app);
 
-//app.get('*', function(request, response) {
-//    response.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));
-//});
+if (process.env.NODE_ENV === 'production') {
+    app.get('*', function(request, response) {
+        response.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));
+    });
+}
 
 app.listen(config.port, err => {
     if (err) {

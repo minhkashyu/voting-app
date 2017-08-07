@@ -8,7 +8,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "babel-node --presets es2015 index.js",
+        "start": "node index.js",
+        "dev": "babel-node --presets es2015 index.js",
         "refresh": "rm -rf node_modules && npm cache clean && npm install",
         "killallport": "killall -9 node",
         "findpid": "ps -aux | grep node",
