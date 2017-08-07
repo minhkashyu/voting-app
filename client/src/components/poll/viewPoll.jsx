@@ -4,7 +4,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { fetchSinglePoll, submitVote, deletePoll } from './../../actions/polling';
+import { fetchSinglePoll, submitVote, deletePoll, displayChart } from './../../actions/polling';
 import VoteForm from './voteForm.jsx';
 import Loading from './../template/loading.jsx';
 import ShareSocialMedia from './../template/shareSocialMedia.jsx';
@@ -15,8 +15,7 @@ class ViewPoll extends Component {
         cookies: PropTypes.instanceOf(Cookies).isRequired
     };
 
-    constructor(props) {
-        super(props);
+    componentDidMount() {
         const { match, fetchSinglePoll } = this.props;
         fetchSinglePoll(match.params.pollId);
     }
@@ -79,6 +78,13 @@ class ViewPoll extends Component {
         }
     }
 
+    renderChart() {
+        const { poll, displayChart } = this.props;
+        if (Object.getOwnPropertyNames(poll).length !== 0) {
+            displayChart(poll.title, poll.options);
+        }
+    }
+
     renderSocialMedia() {
         if (this.props.isAuthenticated) {
             return <ShareSocialMedia />
@@ -86,8 +92,8 @@ class ViewPoll extends Component {
     }
 
     render() {
-        const { location, isFetching, poll } = this.props;
-        if (Object.getOwnPropertyNames(poll).length === 0) {
+        const { location, isFetching, poll, isRedirected } = this.props;
+        if (isRedirected && (Object.getOwnPropertyNames(poll).length === 0)) {
             return (
                 <Redirect to={{
                     pathname: '/',
@@ -99,13 +105,19 @@ class ViewPoll extends Component {
             return <Loading />;
         }
         return (
-            <div>
-                <h3>{poll.title}&nbsp;&nbsp;{this.renderDeletePoll()}</h3>
-                <h4>I'd like to vote for</h4>
-                {this.renderForm()}
-                {this.renderError()}
-                {this.renderMessage()}
-                {this.renderSocialMedia()}
+            <div className="row">
+                <div className="col-md-6">
+                    <h3>{poll.title}&nbsp;&nbsp;{this.renderDeletePoll()}</h3>
+                    <h4>I'd like to vote for</h4>
+                    {this.renderForm()}
+                    {this.renderError()}
+                    {this.renderMessage()}
+                    {this.renderSocialMedia()}
+                </div>
+                <div className="col-md-6">
+                    {this.renderChart()}
+                    <div id="piechart_3d" className="chart"></div>
+                </div>
             </div>
         );
     }
@@ -117,8 +129,9 @@ function mapStateToProps(state) {
         message: state.polling.message,
         poll: state.polling.poll,
         isFetching: state.main.isFetching,
-        isAuthenticated: state.auth.isAuthenticated
+        isAuthenticated: state.auth.isAuthenticated,
+        isRedirected: state.auth.isRedirected
     };
 }
 
-export default withCookies(connect(mapStateToProps, { fetchSinglePoll, submitVote, deletePoll })(ViewPoll));
+export default withCookies(connect(mapStateToProps, { fetchSinglePoll, submitVote, deletePoll, displayChart })(ViewPoll));

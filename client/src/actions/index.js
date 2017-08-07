@@ -30,7 +30,6 @@ const request = (axiosRequest, actionType, errorType, isAuthReq, isRedirect, url
 
     axiosRequest(requestUrl, data, headers)
         .then((response) => {
-            console.dir(response.data);
             dispatch({
                 type: actionType,
                 payload: response.data
@@ -71,25 +70,25 @@ export const deleteRequest = (actionType, errorType, isAuthReq, isRedirect, url,
 
 //TODO: check share buttons on mobile devices
 export const shareFacebook = () => {
-    return function (dispatch, getState, cookies) {
+    return function () {
         window.open(`https://www.facebook.com/dialog/share?app_id=${process.env.REACT_APP_FB_APP_ID}&display=popup&href=${window.location.href}`, '_blank', 'toolbar=0,status=0,width=580,height=325');
     };
 };
 
 export const shareGoogle = () => {
-    return function (dispatch, getState, cookies) {
+    return function () {
         window.open(`https://plus.google.com/share?url=${window.location.href}`, '_blank', 'toolbar=0,status=0,width=580,height=325');
     };
 };
 
 export const shareLinkedin = () => {
-    return function (dispatch, getState, cookies) {
+    return function () {
         window.open(`https://www.linkedin.com/shareArticle?mini=true&amp;url=${window.location.href}`, '_blank', 'toolbar=0,status=0,width=580,height=325');
     };
 };
 
 export const shareTwitter = () => {
-    return function (dispatch, getState, cookies) {
+    return function () {
         window.open(`https://twitter.com/share?url=${window.location.href}`, '_blank', 'toolbar=0,status=0,width=580,height=325');
     };
 };
