@@ -35,7 +35,7 @@ export function fetchMyPolls() {
 export function fetchSinglePoll(pollId) {
     return (dispatch, getState, cookies) => {
         let url = `/polls/${pollId}`;
-        getRequest(RECEIVE_SINGLE_POLL, POLL_ERROR, false, false, url, dispatch, cookies);
+        getRequest(RECEIVE_SINGLE_POLL, POLL_ERROR, false, true, url, dispatch, cookies);
     };
 }
 
