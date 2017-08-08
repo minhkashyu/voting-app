@@ -12,7 +12,8 @@
         "build": "npm run build-css && react-scripts build",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
-        "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+        "heroku-postbuild": "npm install --only=dev && npm install && npm run build",
+        "heroku-yarn-backup": "yarn --production=false && yarn run build"
     },
     "keywords": [
         "voting-app",
