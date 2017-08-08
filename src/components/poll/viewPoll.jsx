@@ -20,6 +20,13 @@ class ViewPoll extends Component {
         fetchSinglePoll(match.params.pollId);
     }
 
+    componentDidUpdate(prevProps) {
+        if ((this.props.poll !== prevProps.poll) ||
+            (this.props.isFetching !== prevProps.isFetching)) {
+            this.renderChart();
+        }
+    }
+
     onSubmitVote(formprops) {
         let optionId = formprops.options,
             blAdd = false;
@@ -116,7 +123,6 @@ class ViewPoll extends Component {
                 </div>
                 <div className="col-md-6">
                     <div id="piechart_3d" className="chart"></div>
-                    {this.renderChart()}
                 </div>
             </div>
         );
