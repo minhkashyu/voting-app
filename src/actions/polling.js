@@ -1,12 +1,16 @@
+import axios from 'axios';
 import {
-    //API_URL,
+    API_URL,
     //PUBLIC_URL,
-    //errorHandler,
+    errorHandler,
     getRequest,
     postRequest,
     deleteRequest
     } from './index';
 import {
+    FETCHING,
+    NOT_FETCHING,
+    NOT_REDIRECT,
     RECEIVE_POLLS,
     RECEIVE_MY_POLLS,
     RECEIVE_SINGLE_POLL,
@@ -52,9 +56,30 @@ export function deletePoll(id) {
 }
 
 export function submitVote(pollId, optionId, blAdd) {
-    let url = blAdd ? `/polls/${pollId}/options` : `/polls/${pollId}/options/${optionId}/vote`;
-    let data = blAdd ? { name: optionId } : {};
-    return (dispatch, getState, cookies) => postRequest(SUBMIT_VOTE, POLL_ERROR, blAdd, false, url, dispatch, cookies, data);
+    return (dispatch, getState, cookies) => {
+        dispatch({ type: NOT_REDIRECT });
+        dispatch({ type: FETCHING });
+        let url = blAdd ? `/polls/${pollId}/options` : `/polls/${pollId}/options/${optionId}/vote`;
+        let requestUrl = API_URL + url;
+        let userId = cookies.get('user') ? cookies.get('user').id : '';
+        let data = blAdd ? { name: optionId } : { userId: userId };
+        let headers = {};
+
+        if (blAdd) {
+            headers = { headers: { Authorization: cookies.get('token') } };
+        }
+        axios.post(requestUrl, data, headers)
+            .then((response) => {
+                dispatch({
+                    type: SUBMIT_VOTE,
+                    payload: response.data
+                });
+                dispatch({ type: NOT_FETCHING });
+            })
+            .catch((error) => {
+                errorHandler(dispatch, error, POLL_ERROR);
+            });
+    };
 }
 
 export function displayChart(title, options) {
