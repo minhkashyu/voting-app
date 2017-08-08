@@ -130,7 +130,7 @@ function mapStateToProps(state) {
         poll: state.polling.poll,
         isFetching: state.main.isFetching,
         isAuthenticated: state.auth.isAuthenticated,
-        isRedirected: state.auth.isRedirected
+        isRedirected: state.main.isRedirected
     };
 }
 
