@@ -79,8 +79,8 @@ class ViewPoll extends Component {
     }
 
     renderChart() {
-        const { poll, displayChart } = this.props;
-        if (Object.getOwnPropertyNames(poll).length !== 0) {
+        const { poll, displayChart, isFetching } = this.props;
+        if (Object.getOwnPropertyNames(poll).length !== 0 && !isFetching) {
             displayChart(poll.title, poll.options);
         }
     }
@@ -115,8 +115,8 @@ class ViewPoll extends Component {
                     {this.renderSocialMedia()}
                 </div>
                 <div className="col-md-6">
-                    {this.renderChart()}
                     <div id="piechart_3d" className="chart"></div>
+                    {this.renderChart()}
                 </div>
             </div>
         );
