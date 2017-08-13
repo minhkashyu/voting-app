@@ -5,5 +5,9 @@ $(document).ready(function() {
         $(this).css('display', 'block');
     });
 
-    $('div.alert').not('.alert-important, .alert-danger').delay(3000).slideUp(500);
+    $(document).on('click', '.navbar-collapse.in', function(e) {
+        if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+            $(this).collapse('hide');
+        }
+    });
 });
