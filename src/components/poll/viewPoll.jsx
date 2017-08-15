@@ -99,8 +99,8 @@ class ViewPoll extends Component {
     }
 
     render() {
-        const { location, isFetching, poll, isRedirected } = this.props;
-        if (isRedirected && (Object.getOwnPropertyNames(poll).length === 0)) {
+        const { location, isFetching, poll, isRedirected, errorMessage } = this.props;
+        if ((isRedirected && (Object.getOwnPropertyNames(poll).length === 0)) || (errorMessage.indexOf('cannot be found') !== -1)) {
             return (
                 <Redirect to={{
                     pathname: '/',

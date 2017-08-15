@@ -17,7 +17,7 @@ class NewPoll extends React.Component {
 
     render() {
         const { handleSubmit, pristine, reset, submitting, isRedirected, location, isFetching, message, addPoll, poll } = this.props;
-        if (isRedirected) {
+        if (isRedirected && message) {
             return (
                 <Redirect to={{
                     pathname: `/polls/${poll._id}`,
