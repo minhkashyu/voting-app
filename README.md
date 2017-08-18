@@ -1,6 +1,6 @@
 # Build a Voting App
 
-A Free Code Camp Dynamic Web Application Project. A Full Stack Javascript App using Node, Express, Passport, MongoDB and React/Redux.
+A Free Code Camp Dynamic Web Application Project. A Full Stack Javascript App using Node, Express, Passport, MongoDB, React/Redux and Bootstrap.
 
 This is the React client side of the Fullstack App. The server side can be found at https://github.com/minhkashyu/voting-app-backend.
 

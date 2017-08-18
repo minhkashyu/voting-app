@@ -29,7 +29,7 @@ class Home extends React.Component {
         return (
             <div>
                 <h1 className="heading1">Voting App</h1>
-                <h4 className="heading2">A Freecodecamp Full-Statck Project using React/Redux, Express and Passport</h4>
+                <h4 className="heading2">A Freecodecamp Full-Statck Project using React/Redux, Bootstrap, Express, Passport and MongoDB</h4>
                 <div className="panel panel-default panel-changed">
                     <div className="panel-heading">
                         <h3>All Polls</h3>
