@@ -11,7 +11,7 @@ class Logout extends Component {
     }
 
     render() {
-        if (this.props.isAuthenticated) {
+        if (!this.props.isAuthenticated) {
             return (
                 <Redirect to={{
                     pathname: '/login',

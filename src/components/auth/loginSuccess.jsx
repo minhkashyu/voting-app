@@ -25,7 +25,7 @@ class LoginSuccess extends Component {
         if (errorMessage) {
             return (
                 <div className="alert alert-danger">
-                    <strong>Error</strong>&nbsp;&nbsp;{this.props.errorMessage}
+                    <strong>Error</strong>&nbsp;&nbsp;{errorMessage}
                 </div>
             );
         }
