@@ -12,7 +12,7 @@
         "build": "npm run build-css && react-scripts build",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
-        "heroku-postbuild": "npm run build",
+        "heroku-postbuild": "npm run build-css",
         "heroku-yarn-postbuild": "yarn --production=true && yarn run build",
         "heroku-npm-postbuild": "npm install --only=dev && npm install && npm run build"
     },
@@ -21,6 +21,7 @@
         "react",
         "client-side"
     ],
+    "repository": "https://github.com/minhkashyu/voting-app-frontend.git",
     "author": "minhkashyu",
     "license": "MIT",
     "homepage": "https://mks-voting-app.herokuapp.com",
