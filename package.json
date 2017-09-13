@@ -12,8 +12,8 @@
         "build": "npm run build-css && react-scripts build",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
-        "heroku-postbuild": "npm install --only=dev && npm install && npm run build",
-        "heroku-yarn-postbuild": "yarn --production=false && yarn run build",
+        "heroku-postbuild": "npm run build",
+        "heroku-yarn-postbuild": "yarn --production=true && yarn run build",
         "heroku-npm-postbuild": "npm install --only=dev && npm install && npm run build"
     },
     "keywords": [
@@ -23,6 +23,7 @@
     ],
     "author": "minhkashyu",
     "license": "MIT",
+    "homepage": "https://mks-voting-app.herokuapp.com",
     "dependencies": {
         "react": "^15.6.1",
         "react-dom": "^15.6.1",
